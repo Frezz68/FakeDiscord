@@ -33,7 +33,8 @@ export default {
             .then(async (response) => {
                 const result = await response.json();
                 if(response.status === 200) {
-                localStorage.setItem("token", result.token)
+                  localStorage.setItem("token", result.token)
+                  this.$router.push({ path: '/home' })
                 } else {
                 this.error = result.message;
                 }
