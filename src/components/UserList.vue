@@ -12,10 +12,6 @@ const users = reactive([
     name:"Theo"
   },
   {
-    id: 2,
-    name:"Theo"
-  },
-  {
     id: 3,
     name:"Mansour"
   },
@@ -27,8 +23,8 @@ const users = reactive([
 </script>
 <template>
   <div class="right-panel">
-    <h3>Utilisateurs</h3>
-    <ul>
+    <ul class="right-panel">
+      <h3>Utilisateurs</h3>
       <li v-for="(_,index) of users"><UserItem :user="users[index]"></UserItem></li>
     </ul>
   </div>
@@ -41,6 +37,7 @@ const users = reactive([
   right: 0;
   bottom: 0;
   width: 250px;
+  padding: 3px;
   background-color: #2a2d31;
 }
 .right-panel h3 {
@@ -55,12 +52,19 @@ const users = reactive([
 
 }
 .right-panel ul {
-  list-style: url('../assets/logo.svg');
+  list-style: none;
   text-align: left;
-
 }
 .right-panel li {
+  line-height: normal;
+  padding-left: 20px;
   margin-top: 5px;
+  border-radius: 7px;
+  height: 30px;
 
+}
+
+li:hover {
+  background-color: #303338;
 }
 </style>
