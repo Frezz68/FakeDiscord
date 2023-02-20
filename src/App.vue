@@ -1,6 +1,8 @@
 <script setup>
 //import HelloWorld from './components/HelloWorld.vue'
 import UserList from './components/UserList.vue'
+import Tchat from './components/Tchat.vue'
+
 </script>
 
 <template>
@@ -14,6 +16,7 @@ import UserList from './components/UserList.vue'
 
   <main>
   <UserList></UserList>
+  <Tchat></Tchat>
   </main>
 </template>
 
