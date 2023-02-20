@@ -58,9 +58,11 @@ const users = reactive([
 .right-panel li {
   line-height: normal;
   padding-left: 20px;
+  padding-top: 3px;
   margin-top: 5px;
   border-radius: 7px;
   height: 30px;
+  font-size: 20px;
 
 }
 
