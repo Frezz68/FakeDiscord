@@ -1,37 +1,29 @@
 <script setup>
 //import HelloWorld from './components/HelloWorld.vue'
+import { RouterLink, RouterView } from 'vue-router'
 import UserList from './components/UserList.vue'
-import LoginPage from "./components/LoginPage.vue";
+import LoginPage from "./view/LoginView.vue";
 </script>
 
 <template>
-  <header>
-
-
     <div class="wrapper">
-      <!--<HelloWorld msg="You did it!" />-->
+      <LoginPage/>
     </div>
-  </header>
+</template>
 
-  <main>
-     <UserList></UserList>
-      <login-page></login-page>
-     </main>
-   </template>
-
-   <style scoped>
-   /*
-   header {
-     line-height: 1.5;
-   }
+<style scoped>
+/*
+header {
+  line-height: 1.5;
+}
 
 
-   @media (min-width: 1024px) {
+@media (min-width: 1024px) {
 
-     header .wrapper {
-       display: flex;
-       place-items: flex-start;
-       flex-wrap: wrap;
-     }
-   }*/
-   </style>
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+}*/
+</style>
