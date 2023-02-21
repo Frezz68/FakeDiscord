@@ -13,12 +13,20 @@ const router = createRouter({
         component: LoginView
         },
         {
-        path: '/home',
-        name: 'home',
+        path: '/channels',
+        name: 'channels',
         // route level code-splitting
         // this generates a separate chunk (About.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: HomePage
+        },
+        {
+            path: '/channels/:id',
+            name: 'channelsId',
+            // route level code-splitting
+            // this generates a separate chunk (About.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: HomePage
         },
         {
         path: "/:pathMatch(.*)*",

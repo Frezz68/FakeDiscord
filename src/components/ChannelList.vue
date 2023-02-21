@@ -1,50 +1,48 @@
 <script setup>
-import UserItem from './UserItem.vue'
 import {reactive} from "vue";
 import {ServiceChannel} from "../service/ServiceChannel";
-import {useRoute} from "vue-router";
+import {useRouter} from "vue-router";
 
-const props = defineProps({
-  users: Object
-})
-/*
-const route = useRoute();
-const currentId = route.params.id;
-
-let channels = reactive([])
-let users = reactive([])
-const getAllChannelUser = async () => {
+/*let channels = reactive([])
+const initChannel = async () => {
   const response = await ServiceChannel.getAllChannel()
   const result = await response.json();
   if (response.status === 200) {
-    channels = result.find(channel => channel.id == currentId)
-    for(let user of channels.users){
-      users.push(user)
+    for (let channel of result){
+      channels.push(channel)
     }
+    console.log(channels)
   }
 }
 
-getAllChannelUser();*/
+initChannel();
+*/
+const props = defineProps({
+  channels: {
+    type: Object,
+  }
+})
 </script>
 <template>
-  <div class="right-panel">
-    <h3>Utilisateurs</h3>
-    <ul>
-      <li v-for="user of users"><UserItem :user="user"></UserItem></li>
+  <div class="left-panel">
+    <h3>Channels</h3>
+    <ul v-for="channel of channels">
+      <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
+
     </ul>
   </div>
 </template>
 
 <style scoped>
-.right-panel {
+.left-panel {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   bottom: 0;
-  width: 250px;
-  background-color: #2a2d31;
+  width: 150px;
+  background-color: #1e1f22;
 }
-.right-panel h3 {
+.left-panel h3 {
   text-align: center;
   border-radius: 5px;
   box-shadow: 1px 0 5px 1px #252525;
@@ -55,19 +53,29 @@ getAllChannelUser();*/
   background-color: #303338;
 
 }
-.right-panel ul {
+.left-panel ul {
   list-style: none;
   text-align: left;
   padding: 3px;
 }
-.right-panel li {
+.left-panel ul a {
+  text-decoration: none;
+  color: unset;
+}
+.left-panel ul li {
   line-height: normal;
-  padding-left: 20px;
+  padding-left: 15px;
   padding-top: 3px;
   margin-top: 5px;
-  border-radius: 7px;
+  border-radius: 20px;
   height: 30px;
   font-size: 20px;
+
+}
+
+
+.left-panel ul li img {
+  height: 15px;
 
 }
 
