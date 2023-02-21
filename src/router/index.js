@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import NotFoundView from '../views/404View.vue'
 import UserList from "@/components/UserList.vue";
+import HomePage from "@/components/HomePage.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,7 +18,7 @@ const router = createRouter({
         // route level code-splitting
         // this generates a separate chunk (About.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
-        component: UserList
+        component: HomePage
         },
         {
         path: "/:pathMatch(.*)*",

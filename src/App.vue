@@ -7,7 +7,6 @@ import LoginPage from "./views/LoginView.vue";
 
 <template>
     <div class="wrapper">
-      <LoginPage/>
     </div>
   <router-view></router-view>
 </template>

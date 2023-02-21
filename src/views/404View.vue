@@ -1,5 +1,7 @@
 <template>
-<div>oue</div>
+<div>
+  <span>Oops !</span>
+</div>
 </template>
 
 <script setup>

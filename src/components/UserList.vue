@@ -2,9 +2,7 @@
 import UserItem from './UserItem.vue'
 import {reactive} from "vue";
 import {ServiceChannel} from "../service/ServiceChannel";
-const props = defineProps({
-  users: [],
-})
+
 let channels = reactive([])
 const getAllChannel = async () => {
   const response = await ServiceChannel.getAllChannel()
