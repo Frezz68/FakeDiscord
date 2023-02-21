@@ -4,14 +4,16 @@
             <div class="login-box">
                 <h2>Ha, te revoilà !</h2>
                 <h4>Nous sommes si heureux de te revoir !</h4>
-                <label for="user">Nom d'utilisateur :</label>
-                <input v-model="username" placeholder="Username" type="text" id="user" required><br>
-                <label for="password">Mot de passe :</label>
-                <input v-model="password" placeholder="password" type="password" id="password" required><br>
-                <button v-on:click="login">Log In</button>
+                <label for="user">Nom d'utilisateur </label>
+                <input v-model="username" type="text" id="user" required><br>
+                <label for="password">Mot de passe </label>
+                <input v-model="password" type="password" id="password" required><br>
+                <button class="button" v-on:click="login">Log In</button>
             </div>
             <div class="QRCode-box">
-
+                <img src="../assets/QRCode.png" alt="QRCode">
+                <h2>Se connecter avec un code QR</h2>
+                <h4>Scanner-le avec l'application mobile Discord pour te connecter instantanément.</h4>
             </div>
         </div>
         
@@ -51,6 +53,8 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-image: url('../assets/Background.jpg');
+    background-size: contain;
 }
 
 .panneau {
@@ -82,24 +86,31 @@ h4 {
     width: 80%;
     padding: 10px;
     margin-bottom: 20px;
+    color: white;
+    background-color: #1e1f22;
+    margin-top: 10px;
     border: none;
     border-radius: 3px;
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
-.login-box input[type="submit"] {
-    width: 100%;
+.login-box label::after {
+    content: "*";
+    color: red;
+}
+.button {
+    width: 85%;
     padding: 10px;
-    background-color: #4CAF50;
-    color: #5765f2;
+    background-color: #5765f2;
+    color: white;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
-.login-box input[type="submit"]:hover {
-    background-color: #3e8e41;
+.button:hover {
+    background-color: #4d64b9;
 }
 
 
@@ -107,6 +118,13 @@ h4 {
     display: inline-block;
     width: 40%;
     vertical-align: top; 
+}
+
+.QRCode-box img {
+    margin-top: 5%;
+    margin-left: 30%;
+    width: 40%;
+    height: auto;
 }
 
 
