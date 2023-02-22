@@ -1,30 +1,10 @@
 <script setup>
 import UserItem from './UserItem.vue'
-import {reactive} from "vue";
-import {ServiceChannel} from "../service/ServiceChannel";
-import {useRoute} from "vue-router";
 
 const props = defineProps({
   users: Object
 })
-/*
-const route = useRoute();
-const currentId = route.params.id;
 
-let channels = reactive([])
-let users = reactive([])
-const getAllChannelUser = async () => {
-  const response = await ServiceChannel.getAllChannel()
-  const result = await response.json();
-  if (response.status === 200) {
-    channels = result.find(channel => channel.id == currentId)
-    for(let user of channels.users){
-      users.push(user)
-    }
-  }
-}
-
-getAllChannelUser();*/
 </script>
 <template>
   <div class="right-panel">
@@ -41,7 +21,7 @@ getAllChannelUser();*/
   top: 0;
   right: 0;
   bottom: 0;
-  width: 250px;
+  width: 180px;
   background-color: #2a2d31;
 }
 .right-panel h3 {
