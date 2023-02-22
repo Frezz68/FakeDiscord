@@ -24,12 +24,11 @@ const initChannel = async () => {
 const getAllChannelUser = async (currentId) => {
   users.splice(0)
   let filteredChannels = channels.find(channel => channel.id == currentId)
-  console.log(filteredChannels)
+  if(!filteredChannels) return;
   for (let user of filteredChannels.users){
     users.push(user)
   }
 }
-
 initChannel();
 watchEffect( () => {
   currentId = route.params.id;
