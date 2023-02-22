@@ -30,7 +30,6 @@ const getAllChannelUser = async (currentId) => {
   }
 }
 initChannel();
-
 watchEffect( () => {
   currentId = route.params.id;
   getAllChannelUser(currentId);
