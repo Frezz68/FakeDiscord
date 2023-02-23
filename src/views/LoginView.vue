@@ -36,7 +36,7 @@ export default {
                 const result = await response.json();
                 if(response.status === 200) {
                   localStorage.setItem("token", result.token)
-                  this.$router.push({ path: '/home' })
+                  this.$router.push({ path: '/channels' })
                 } else {
                 this.error = result.message;
                 }

@@ -1,26 +1,16 @@
 <script setup>
 import UserItem from './UserItem.vue'
-import {reactive} from "vue";
-import {ServiceChannel} from "../service/ServiceChannel";
 
-let channels = reactive([])
-const getAllChannel = async () => {
-  const response = await ServiceChannel.getAllChannel()
-    const result = await response.json();
-    if (response.status === 200) {
-      for (let channel of result){
-        channels.push(channel)
-      }
-    }
-}
-getAllChannel();
+const props = defineProps({
+  users: Object
+})
+
 </script>
 <template>
   <div class="right-panel">
     <h3>Utilisateurs</h3>
-    <ul v-for="channel of channels">
-      <li>{{ channel.name }} :</li>
-      <li v-for="user of channel.users"><UserItem :user="user"></UserItem></li>
+    <ul>
+      <li v-for="user of users"><UserItem :user="user"></UserItem></li>
     </ul>
   </div>
 </template>
@@ -31,7 +21,7 @@ getAllChannel();
   top: 0;
   right: 0;
   bottom: 0;
-  width: 250px;
+  width: 180px;
   background-color: #2a2d31;
 }
 .right-panel h3 {
