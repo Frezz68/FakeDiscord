@@ -1,20 +1,11 @@
 <script setup>
-//import HelloWorld from './components/HelloWorld.vue'
-import UserList from './components/UserList.vue'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-
-
     <div class="wrapper">
-      <!--<HelloWorld msg="You did it!" />-->
     </div>
-  </header>
-
-  <main>
-  <UserList></UserList>
-  </main>
+  <router-view></router-view>
 </template>
 
 <style scoped>
