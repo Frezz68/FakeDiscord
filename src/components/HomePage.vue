@@ -1,10 +1,11 @@
 <script setup>
 import UserList from "@/components/UserList.vue";
-import ChatPrompt from "@/components/ChatPrompt.vue";
 import ChannelList from "@/components/ChannelList.vue";
-import {reactive, watch, watchEffect} from "vue";
-import {ServiceChannel} from "@/service/ServiceChannel";
-import {useRoute} from "vue-router";
+import MainChannel from "@/components/MainChannel.vue"
+
+import { reactive, watch, watchEffect } from "vue";
+import { ServiceChannel } from "@/service/ServiceChannel";
+import { useRoute } from "vue-router";
 
 const channels = reactive([])
 let users = reactive([])
@@ -15,7 +16,7 @@ const initChannel = async () => {
   const response = await ServiceChannel.getAllChannel()
   const result = await response.json();
   if (response.status === 200) {
-    for (let channel of result){
+    for (let channel of result) {
       channels.push(channel)
     }
   }
@@ -24,25 +25,29 @@ const initChannel = async () => {
 const getAllChannelUser = async (currentId) => {
   users.splice(0)
   let filteredChannels = channels.find(channel => channel.id == currentId)
-  if(!filteredChannels) return;
-  for (let user of filteredChannels.users){
+  if (!filteredChannels) return;
+  for (let user of filteredChannels.users) {
     users.push(user)
   }
 }
 initChannel();
-watchEffect( () => {
+watchEffect(() => {
   currentId = route.params.id;
   getAllChannelUser(currentId);
 })
 </script>
+
 <template>
-  <ChannelList :channels="channels"></ChannelList>
-  <ChatPrompt></ChatPrompt>
-  <UserList v-if="channels" :users="users"></UserList>
+  <div class="wrapper">
+    <ChannelList :channels="channels"></ChannelList>
+    <MainChannel></MainChannel>
+    <UserList v-if="channels" :users="users"></UserList>
+  </div>
 </template>
 
-
-
 <style scoped>
-
+.wrapper {
+  display: flex;
+  height: 100vh;
+}
 </style>

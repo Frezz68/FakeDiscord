@@ -1,7 +1,7 @@
 <script setup>
-import {reactive} from "vue";
-import {ServiceChannel} from "../service/ServiceChannel";
-import {useRouter} from "vue-router";
+import { reactive } from "vue";
+import { ServiceChannel } from "../service/ServiceChannel";
+import { useRouter } from "vue-router";
 
 /*let channels = reactive([])
 const initChannel = async () => {
@@ -27,7 +27,9 @@ const props = defineProps({
   <div class="left-panel">
     <h3>Channels</h3>
     <ul v-for="channel of channels">
-      <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
+      <RouterLink :to="`/channels/${channel.id}`">
+        <li><img :src="channel.img"> {{ channel.name }}</li>
+      </RouterLink>
 
     </ul>
   </div>
@@ -35,13 +37,10 @@ const props = defineProps({
 
 <style scoped>
 .left-panel {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 150px;
+  width: 10%;
   background-color: #1e1f22;
 }
+
 .left-panel h3 {
   text-align: center;
   border-radius: 5px;
@@ -53,15 +52,18 @@ const props = defineProps({
   background-color: #303338;
 
 }
+
 .left-panel ul {
   list-style: none;
   text-align: left;
   padding: 3px;
 }
+
 .left-panel ul a {
   text-decoration: none;
   color: unset;
 }
+
 .left-panel ul li {
   line-height: normal;
   padding-left: 15px;

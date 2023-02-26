@@ -1,4 +1,4 @@
-<script>
+<script setup>
 // ce composant correspond à la zone de saisi pour un chanel
 </script>
 
@@ -8,13 +8,13 @@
 
 <style scoped>
 input {
-    width: 80%;
+    /* width: 80%;
     padding: 1em;
-    /* margin: 1em; */
     margin-left: 1%;
     margin-right: 1%;
     margin-top: 45%;
-    margin-bottom: 1%;
+    margin-bottom: 1%; */
+    position: center;
     background-color: gainsboro;
     border-radius: 18px;
 
