@@ -48,7 +48,7 @@ watch(() => route.params.id, (newId) => {
     <div class="input">
       <!--<input type="text" placeholder="Envoyer un message..."> -->
       <form @submit.prevent="sendMessage()">
-      <input type="text" id="input" name="Text" placeholder="Envoyer un message dans 'nom du channel'" v-model="promptMsg" >
+      <input type="text" id="prompt" name="Text" placeholder="Envoyer un message dans 'nom du channel'" v-model="promptMsg" >
       </form>
     </div>
   </div>
@@ -65,17 +65,17 @@ watch(() => route.params.id, (newId) => {
 .messages {
   flex-grow: 1;
   overflow-y: auto;
-  margin-left: 150px;
+  margin-left: 160px;
   margin-bottom: 20px;
 }
 
-input {
+#prompt {
   position: fixed;
   display: flex;
   bottom: 0;
-  margin-right: -180px;
+  margin-left: 150px;
   /*flex: 1 1 auto;*/
-    width: 80%;
+    width: 50%;
     padding: 1em;
     /* margin: 1em;
     margin-left: 1%;
