@@ -24,7 +24,7 @@ const props = defineProps({
   background-color: #2a2d31;
 }
 
-.right-panel h3 {
+/* .right-panel h3 {
   text-align: center;
   border-radius: 5px;
   box-shadow: 1px 0 5px 1px #252525;
@@ -55,5 +55,5 @@ const props = defineProps({
 
 li:hover {
   background-color: #303338;
-}
+} */
 </style>

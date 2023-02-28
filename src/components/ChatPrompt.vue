@@ -3,20 +3,27 @@
 </script>
 
 <template>
-    <input type="text" id="input" name="input" placeholder="Envoyer un message dans 'nom du channel'">
+    <div class="prompt">
+        <input type="text" id="input" name="input" placeholder="Envoyer un message dans 'nom du channel'">
+
+    </div>
 </template>
 
 <style scoped>
+.prompt {
+    display: flex;
+}
+
 input {
-    /* width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
     padding: 1em;
-    margin-left: 1%;
+    /* margin-left: 1%;
     margin-right: 1%;
     margin-top: 45%;
     margin-bottom: 1%; */
-    position: center;
     background-color: gainsboro;
     border-radius: 18px;
-
 }
 </style>

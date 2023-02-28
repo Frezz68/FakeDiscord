@@ -6,8 +6,4 @@
 </template>
 
 
-<style>
-.msg {
-    width: 50%;
-}
-</style>
+<style></style>

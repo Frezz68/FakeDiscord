@@ -5,12 +5,25 @@ import Prompt from "@/components/ChatPrompt.vue"
 <template>
     <div class="channel">
         chan
-        <Msg></Msg>
-        <Prompt></Prompt>
+        <div class="msgContent">
+            <Msg></Msg>
+        </div>
+        <div class="input">
+            <Prompt></Prompt>
+        </div>
     </div>
 </template>
 <style scoped>
 .channel {
-    width: 1000vh;
+    width: 100%;
 }
+
+.msgContent {
+    width: 30%;
+    height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 </style>
