@@ -3,12 +3,14 @@ import MessageItem from "@/components/MessageItem.vue";
 import {ServiceMessage} from "@/service/ServiceMessage";
 import {reactive, watch, ref} from "vue";
 import {useRoute} from "vue-router";
+import {getWebSocket} from "@/websocket/websocket";
 
 const messages = reactive([]);
 const promptMsg = ref('');
 const route = useRoute();
 let currentId = route.params.id;
 
+let ws = getWebSocket(currentId,localStorage.getItem("token"));
 
 const getAllMessages = async (currentId) => {
   messages.splice(0)
@@ -18,23 +20,35 @@ const getAllMessages = async (currentId) => {
     for (let message of result){
       messages.push(message)
     }
-    console.log(messages)
   }
 }
 const sendMessage = async () => {
-  console.log(promptMsg.value);
   const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
   if (response.status === 200) {
-    console.log(response);
+    promptMsg.value = '';
   }
-  console.log(response);
 }
+
+const initWebSocket = async () => {
+  ws = null;
+  ws = getWebSocket(currentId, localStorage.getItem("token"));
+  ws.then((ws) => {
+    ws.onmessage = (event) => {
+      messages.push(JSON.parse(event.data))
+    }
+  })
+}
+
 getAllMessages(currentId);
 
-watch(() => route.params.id, (newId) => {
+watch(() => route.params.id, async (newId) => {
   currentId = newId;
-  getAllMessages(currentId);
+  await getAllMessages(currentId);
+  (await ws).close();
+  ws = null;
+  await initWebSocket();
 })
+
 
 </script>
 
@@ -42,7 +56,7 @@ watch(() => route.params.id, (newId) => {
 
   <div class="chat">
     <div class="messages">
-      <MessageItem v-for="message of messages" :message="message"></MessageItem>
+      <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
       <!-- Liste des messages -->
     </div>
     <div class="input">
