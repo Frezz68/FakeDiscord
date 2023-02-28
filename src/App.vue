@@ -1,26 +1,11 @@
 <script setup>
-//import HelloWorld from './components/HelloWorld.vue'
-import UserList from './components/UserList.vue'
-import Tchat from './components/Tchat.vue'
-import Input from './components/Input.vue'
-
-
+import { RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header>
-
-
     <div class="wrapper">
-      <!--<HelloWorld msg="You did it!" />-->
     </div>
-  </header>
-
-  <main>
-  <UserList></UserList>
-  <!-- <Tchat></Tchat> -->
-  <Input></Input>
-  </main>
+  <router-view></router-view>
 </template>
 
 <style scoped>
