@@ -36,6 +36,8 @@ const props = defineProps({
 <style scoped>
 .left-panel {
   position: fixed;
+  flex-basis: 150px;
+  flex-direction: column;
   top: 0;
   left: 0;
   bottom: 0;
