@@ -25,7 +25,7 @@ const props = defineProps({
 </script>
 <template>
   <div class="left-panel">
-    <h3>Channels</h3>
+    <h3>Channels <Button style="background-color: transparent; color: white; border-radius: 50px; padding: 5px">+</Button></h3>
     <ul v-for="channel of channels">
       <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
 
