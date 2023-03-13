@@ -1,24 +1,31 @@
 <script setup>
 import UserList from "@/components/UserList.vue";
 import ChannelList from "@/components/ChannelList.vue";
-import MainChannel from "@/components/MainChannel.vue"
+import {reactive, watchEffect} from "vue";
+import {ServiceChannel} from "@/service/ServiceChannel";
 
-import { reactive, watch, watchEffect } from "vue";
-import { ServiceChannel } from "@/service/ServiceChannel";
-import { useRoute } from "vue-router";
+import {useRoute} from "vue-router";
+import Home from "@/components/Home.vue";
+import router from "@/router";
 
 const channels = reactive([])
 let users = reactive([])
 
 const route = useRoute();
 let currentId;
+
 const initChannel = async () => {
-  const response = await ServiceChannel.getAllChannel()
-  const result = await response.json();
+  const response = await ServiceChannel.getAllChannel();
   if (response.status === 200) {
-    for (let channel of result) {
+    const result = await response.json();
+    for (let channel of result){
       channels.push(channel)
     }
+  }
+  else if (response.status === 401){
+    localStorage.removeItem('token')
+    router.push({ path: '/' })
+    console.log("401 channel")
   }
 }
 
@@ -30,24 +37,27 @@ const getAllChannelUser = async (currentId) => {
     users.push(user)
   }
 }
+
 initChannel();
-watchEffect(() => {
+
+watchEffect( () => {
   currentId = route.params.id;
   getAllChannelUser(currentId);
 })
+
 </script>
 
 <template>
-  <div class="wrapper">
-    <ChannelList :channels="channels"></ChannelList>
-    <MainChannel></MainChannel>
-    <UserList v-if="channels" :users="users"></UserList>
+  <div>
+  <ChannelList :channels="channels"></ChannelList>
+  <ChatPrompt v-if="channels.find(c => c.id == currentId)"></ChatPrompt>
+  <Home v-else></Home>
+  <UserList v-if="channels" :users="users"></UserList>
   </div>
 </template>
 
 <style scoped>
-.wrapper {
+div{
   display: flex;
-  height: 100vh;
 }
 </style>

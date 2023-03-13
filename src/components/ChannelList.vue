@@ -37,7 +37,13 @@ const props = defineProps({
 
 <style scoped>
 .left-panel {
-  width: 10%;
+  position: fixed;
+  flex-basis: 150px;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 150px;
   background-color: #1e1f22;
 }
 
