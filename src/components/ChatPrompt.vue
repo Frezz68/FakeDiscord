@@ -16,7 +16,6 @@ const props = defineProps({
   }
 })
 
-
 const changePromptName = (currentId) => {
   let filteredChannels = props.channels.find(channel => channel.id == currentId)
   console.log(filteredChannels)
@@ -25,7 +24,6 @@ const changePromptName = (currentId) => {
 
 changePromptName(currentId);
 let ws = getWebSocket(currentId,localStorage.getItem("token"));
-
 
 const getAllMessages = async (currentId) => {
   messages.splice(0)
