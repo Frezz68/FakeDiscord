@@ -53,8 +53,9 @@ export default {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('../assets/Background.jpg');
-    background-size: contain;
+    background-image: url('../assets/FondLogin.png');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .panneau {
@@ -71,6 +72,12 @@ export default {
     display: inline-block;
     width: 60%;
     vertical-align: top; 
+}
+
+@media (max-width: 1000px) {
+    .login-box {
+        width: 100%;
+    }
 }
 
 h2 {
@@ -94,6 +101,12 @@ h4 {
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
+@media (max-width: 1000px) {
+    .login-box input[type="text"],
+    .login-box input[type="password"] {
+        width: 95%;
+    }
+}
 .login-box label::after {
     content: "*";
     color: red;
@@ -113,11 +126,22 @@ h4 {
     background-color: #4d64b9;
 }
 
+@media (max-width: 1000px) {
+    .button {
+        width: 99%;
+    }
+}
 
 .QRCode-box {
     display: inline-block;
     width: 40%;
     vertical-align: top; 
+}
+
+@media (max-width: 1000px) {
+  .QRCode-box {
+    display: none;
+  }
 }
 
 .QRCode-box img {
