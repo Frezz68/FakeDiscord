@@ -50,7 +50,7 @@ watchEffect( () => {
 <template>
   <div>
   <ChannelList :channels="channels"></ChannelList>
-  <ChatPrompt v-if="channels.find(c => c.id == currentId)"></ChatPrompt>
+  <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
   <Home v-else></Home>
   <UserList v-if="channels" :users="users"></UserList>
   </div>

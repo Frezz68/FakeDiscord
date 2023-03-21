@@ -9,8 +9,24 @@ const messages = reactive([]);
 const promptMsg = ref('');
 const route = useRoute();
 let currentId = route.params.id;
+let placeholderText = ref('');
+const props = defineProps({
+  channels: {
+    type: Object,
+  }
+})
 
+<<<<<<< HEAD
+const changePromptName = (currentId) => {
+  let filteredChannels = props.channels.find(channel => channel.id == currentId)
+  console.log(filteredChannels)
+  placeholderText.value = 'Envoyer un message dans ' + filteredChannels.name;
+}
+
+changePromptName(currentId);
+=======
 let ws = getWebSocket(currentId,localStorage.getItem("token"));
+>>>>>>> DEV
 
 const getAllMessages = async (currentId) => {
   messages.splice(0)
@@ -43,10 +59,15 @@ getAllMessages(currentId);
 
 watch(() => route.params.id, async (newId) => {
   currentId = newId;
+<<<<<<< HEAD
+  changePromptName(currentId);
+  getAllMessages(currentId);
+=======
   await getAllMessages(currentId);
   (await ws).close();
   ws = null;
   await initWebSocket();
+>>>>>>> DEV
 })
 
 
@@ -62,7 +83,7 @@ watch(() => route.params.id, async (newId) => {
     <div class="input">
       <!--<input type="text" placeholder="Envoyer un message..."> -->
       <form @submit.prevent="sendMessage()">
-      <input type="text" id="prompt" name="Text" placeholder="Envoyer un message dans 'nom du channel'" v-model="promptMsg" >
+      <input type="text" id="prompt" name="Text" :placeholder="placeholderText" v-model="promptMsg" >
       </form>
     </div>
   </div>
