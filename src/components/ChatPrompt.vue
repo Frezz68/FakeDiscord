@@ -16,7 +16,6 @@ const props = defineProps({
   }
 })
 
-<<<<<<< HEAD
 const changePromptName = (currentId) => {
   let filteredChannels = props.channels.find(channel => channel.id == currentId)
   console.log(filteredChannels)
@@ -24,9 +23,7 @@ const changePromptName = (currentId) => {
 }
 
 changePromptName(currentId);
-=======
 let ws = getWebSocket(currentId,localStorage.getItem("token"));
->>>>>>> DEV
 
 const getAllMessages = async (currentId) => {
   messages.splice(0)
@@ -59,15 +56,11 @@ getAllMessages(currentId);
 
 watch(() => route.params.id, async (newId) => {
   currentId = newId;
-<<<<<<< HEAD
   changePromptName(currentId);
-  getAllMessages(currentId);
-=======
   await getAllMessages(currentId);
   (await ws).close();
   ws = null;
   await initWebSocket();
->>>>>>> DEV
 })
 
 
