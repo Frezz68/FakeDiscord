@@ -2,21 +2,54 @@
   <div class="vue-modal">
     <div class="vue-modal-inner">
       <div class="vue-modal-content">
-        <h1>TEST ça s'affiche </h1>
-        <button type="button" @click="closePopup">Close</button>
+        <h2>Ajouter un user</h2>
+        <div class="add-user-box">
+          <label for="user">Nom de l'utilisateur à ajouter </label>
+          <input v-model="username" type="text" id="user" required><br>
+        </div>
+        <button class="button" type="button" @click="addUser">Ajouter</button>
+        <button class="button" @click="closePopup">Annuler</button>
+
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    closePopup() {
-      this.$emit("openOrClosePopup", false);
-    },
+<script setup>
+import {ServiceChannel} from "../service/ServiceChannel";
+import {useRoute} from "vue-router";
+import {defineEmits, ref} from "vue";
+
+const route = useRoute();
+let currentId;
+let username = ref("");
+
+const emits = defineEmits(['openOrClosePopup', 'refresh'])
+
+const closePopup = () => {
+  emits('openOrClosePopup',false)
+}
+
+const  refreshUser = () => {
+  emits('refresh')
+}
+
+currentId = route.params.id;
+const addUser = () => {
+  console.log("addUser", username.value)
+  if (username.value !== "") {
+    ServiceChannel.addUserToChannel(currentId, username.value)
+      .then(async (response) => {
+        const result = await response.json();
+        if (response.status === 200) {
+          closePopup();
+          refreshUser();
+        } else {
+          this.error = result.message;
+        }
+      });
   }
-};
+}
 </script>
 
 <style scoped>
@@ -41,16 +74,77 @@ export default {
 }
 
 .vue-modal-inner {
-  max-width: 500px;
   margin: 2rem auto;
+  width: 40%;
 }
 
 .vue-modal-content {
-  position: relative;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  background-clip: padding-box;
-  border-radius: 0.3rem;
-  padding: 1rem;
+  background-color: #303338;
+  color: #7a7b80;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+}
+
+@media (max-width: 1000px) {
+  .login-box {
+    width: 100%;
+  }
+}
+
+.add-user-box {
+  margin-top: 20px;
+  margin-left: 5%;
+  text-align: left;
+}
+
+.add-user-box input[type="text"] {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: white;
+  background-color: #1e1f22;
+  margin-top: 10px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1000px) {
+  .login-box input[type="text"],
+  .login-box input[type="password"] {
+    width: 95%;
+  }
+}
+.add-user-box label::after {
+  content: "*";
+  color: red;
+}
+.button {
+  width: 40%;
+  padding: 10px;
+  margin: 20px;
+  background-color: #5765f2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #4d64b9;
+}
+
+@media (max-width: 1200px) {
+  .button {
+    width: 70%;
+  }
 }
 </style>

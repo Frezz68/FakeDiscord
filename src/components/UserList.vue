@@ -1,20 +1,18 @@
-<script>
+<script setup>
 import UserItem from './UserItem.vue'
+import { defineEmits } from 'vue'
 
-export default {
-  props: () => ({
-    users: []
-  }),
-  components: {
-    UserItem
-  },
-  methods: {
-    openPopup() {
-      this.$emit('openOrClosePopup', true)
-    }
+const props = defineProps({
+  users: {
+    type: Array,
   }
-}
+})
 
+const emits = defineEmits(['openOrClosePopup'])
+
+const openPopup = () => {
+  emits('openOrClosePopup',true)
+}
 </script>
 <template>
   <div class="right-panel">

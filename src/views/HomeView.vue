@@ -37,6 +37,7 @@ const initChannel = async () => {
   const response = await ServiceChannel.getAllChannel();
   if (response.status === 200) {
     const result = await response.json();
+    channels.splice(0)
     for (let channel of result){
       channels.push(channel)
     }
@@ -63,6 +64,11 @@ const openOrClosePopup = (value) => {
   showingPopup.value = value;
 }
 
+const refresh = () => {
+  initChannel();
+  getAllChannelUser(currentId);
+}
+
 isLogin();
 initChannel();
 
@@ -77,8 +83,8 @@ watchEffect( () => {
     <ChannelList :channels="channels"></ChannelList>
     <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
     <Home v-else></Home>
-    <ModalAddUser v-if="showingPopup.value" @open-or-close-popup="openOrClosePopup"></ModalAddUser>
-    <UserList v-if="channels" :users="users" @open-or-close-popup="openOrClosePopup"></UserList>
+    <ModalAddUser v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" @refresh="refresh"></ModalAddUser>
+    <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup"></UserList>
   </div>
 </template>
 
