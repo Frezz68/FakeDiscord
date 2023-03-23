@@ -1,25 +1,79 @@
 <script setup>
 import UserItem from './UserItem.vue'
-import { defineEmits } from 'vue'
+import {defineEmits, watchEffect} from 'vue'
+import {useRoute} from "vue-router";
+import {ServiceChannel} from "../service/ServiceChannel";
+
+const route = useRoute();
+let currentId;
+let channelCreator;
+let userConnected = localStorage.getItem("username");
 
 const props = defineProps({
   users: {
     type: Array,
+  },
+  channels: {
+    creator: String,
+    name: String,
+    id: Number,
+    users: Array,
+    img: String,
+    theme: String,
   }
 })
 
-const emits = defineEmits(['openOrClosePopup'])
+const emits = defineEmits(['openOrClosePopup', 'refresh'])
+
+const  refreshUser = () => {
+  emits('refresh')
+}
+
+const getCreator = (currentId) => {
+  let channel = props.channels.find(channel => channel.id == currentId)
+  channelCreator = channel.creator
+}
+
+const deleteUser = async (user) => {
+  console.log("deleteUser", user)
+  if (user !== null && currentId !== null) {
+    try {
+      const response = await ServiceChannel.removeUserFromChannel(currentId, user);
+      if (response.status === 200) {
+        refreshUser();
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
 
 const openPopup = () => {
   emits('openOrClosePopup',true)
 }
+
+watchEffect( () => {
+  currentId = route.params.id;
+  getCreator(currentId);
+})
+
+
+
 </script>
 <template>
   <div class="right-panel">
     <h3>Utilisateurs</h3>
-    <button class="button" v-on:click="openPopup">Ajouter un utilisateur</button>
+    <button v-if="userConnected == channelCreator" class="button" v-on:click="openPopup">Ajouter un utilisateur</button>
     <ul>
-      <li v-for="user of users"><UserItem :user="user"></UserItem></li>
+      <li v-for="user of users">
+        <div class="userName">
+          <UserItem :user="user"></UserItem>
+        </div>
+        <div class="delete" v-if="userConnected == channelCreator">
+          <img src="../assets/poubelle.png" alt="Poubelle" @click="deleteUser(user)">
+        </div>
+
+      </li>
     </ul>
   </div>
 </template>
@@ -62,11 +116,35 @@ const openPopup = () => {
   background-color: #4d64b9;
 }
 
+li {
+  width: 90%;
+  height: auto;
+}
+
+.userName {
+  display: inline-block;
+  width: 80%;
+  vertical-align: top;
+}
+
+.delete {
+  display: inline-block;
+  width: 20%;
+  opacity: 0;
+  vertical-align: top;
+  transition: opacity 0.3s ease;
+}
+
+li:hover .delete {
+  opacity: 1;
+}
+
 .right-panel ul {
   list-style: none;
   text-align: left;
   padding: 3px;
 }
+
 .right-panel li {
   line-height: normal;
   padding-left: 20px;
@@ -80,5 +158,10 @@ const openPopup = () => {
 
 li:hover {
   background-color: #303338;
+}
+
+img {
+  height: 25px;
+  width: 25px;
 }
 </style>
