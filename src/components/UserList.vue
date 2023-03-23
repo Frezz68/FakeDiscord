@@ -11,7 +11,7 @@ const props = defineProps({
 const emits = defineEmits(['openOrClosePopup'])
 
 const openPopup = () => {
-  emits('openOrClosePopup',true)
+  emits('openOrClosePopup',"addUser",true)
 }
 </script>
 <template>

@@ -3,7 +3,7 @@
 import UserList from "@/components/UserList.vue";
 import ChatPrompt from "@/components/ChatPrompt.vue";
 import ChannelList from "@/components/ChannelList.vue";
-import ModalAddUser from "@/components/ModalAddUser.vue";
+import ModalFrame from "@/components/ModalFrame.vue";
 import Home from "@/components/Home.vue";
 
 import {reactive, watchEffect} from "vue";
@@ -15,6 +15,7 @@ import router from "@/router";
 
 const channels = reactive([])
 let users = reactive([])
+let type = reactive([])
 
 const route = useRoute();
 let currentId;
@@ -60,13 +61,15 @@ const getAllChannelUser = async (currentId) => {
 
 let showingPopup = reactive({value: false})
 
-const openOrClosePopup = (value) => {
+const openOrClosePopup = (typeEmit,value) => {
+  type = typeEmit;
   showingPopup.value = value;
 }
 
 const refresh = () => {
   initChannel();
   getAllChannelUser(currentId);
+  initChannel();
 }
 
 isLogin();
@@ -80,10 +83,10 @@ watchEffect( () => {
 </script>
 <template>
   <div>
-    <ChannelList :channels="channels"></ChannelList>
+    <ChannelList :channels="channels" @openOrClosePopup="openOrClosePopup"></ChannelList>
     <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
     <Home v-else></Home>
-    <ModalAddUser v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" @refresh="refresh"></ModalAddUser>
+    <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" @refresh="refresh"></ModalFrame>
     <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup"></UserList>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-modal">
+  <div class="vue-modal" v-if="type == 'addUser'">
     <div class="vue-modal-inner">
       <div class="vue-modal-content">
         <h2>Ajouter un user</h2>
@@ -8,6 +8,22 @@
           <input v-model="username" type="text" id="user" required><br>
         </div>
         <button class="button" type="button" @click="addUser">Ajouter</button>
+        <button class="button" @click="closePopup">Annuler</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="vue-modal" v-else-if="type == 'addChannel'">
+    <div class="vue-modal-inner">
+      <div class="vue-modal-content">
+        <h2>Créer un channel</h2>
+        <div class="add-user-box">
+          <label for="user">Titre du channel </label>
+          <input v-model="name" type="text" id="user" required><br>
+          <label for="image">URL de l'image </label>
+          <input v-model="image" type="text" id="image" required><br>
+        </div>
+        <button class="button" type="button" @click="addChannel">Ajouter</button>
         <button class="button" @click="closePopup">Annuler</button>
 
       </div>
@@ -22,15 +38,27 @@ import {defineEmits, ref} from "vue";
 
 const route = useRoute();
 let currentId;
+// adduser
 let username = ref("");
+
+// addchannel
+let name = ref("");
+let image = ref("");
+
+const props = defineProps({
+  type: {
+    type: String,
+    required: true,
+  },
+});
 
 const emits = defineEmits(['openOrClosePopup', 'refresh'])
 
 const closePopup = () => {
-  emits('openOrClosePopup',false)
+  emits('openOrClosePopup',props.type,false)
 }
 
-const  refreshUser = () => {
+const  refresh = () => {
   emits('refresh')
 }
 
@@ -43,7 +71,24 @@ const addUser = () => {
         const result = await response.json();
         if (response.status === 200) {
           closePopup();
-          refreshUser();
+          refresh();
+        } else {
+          this.error = result.message;
+        }
+      });
+  }
+}
+
+const addChannel = () => {
+  console.log("addChannel", name.value)
+  if (name.value !== "" && image.value !== "") {
+    ServiceChannel.addChannel(name.value, image.value)
+      .then(async (response) => {
+        console.log(response)
+        const result = await response.json();
+        if (response.status === 200) {
+          closePopup();
+          refresh();
         } else {
           this.error = result.message;
         }
