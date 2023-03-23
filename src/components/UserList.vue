@@ -1,14 +1,23 @@
 <script setup>
 import UserItem from './UserItem.vue'
+import { defineEmits } from 'vue'
 
 const props = defineProps({
-  users: Object
+  users: {
+    type: Array,
+  }
 })
 
+const emits = defineEmits(['openOrClosePopup'])
+
+const openPopup = () => {
+  emits('openOrClosePopup',true)
+}
 </script>
 <template>
   <div class="right-panel">
     <h3>Utilisateurs</h3>
+    <button class="button" v-on:click="openPopup">Ajouter un utilisateur</button>
     <ul>
       <li v-for="user of users"><UserItem :user="user"></UserItem></li>
     </ul>
@@ -35,8 +44,24 @@ const props = defineProps({
   margin-bottom: 20px;
   padding: 2px;
   background-color: #303338;
-
 }
+
+.button {
+  margin-left: 7%;
+  width: 85%;
+  padding: 10px;
+  background-color: #5765f2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #4d64b9;
+}
+
 .right-panel ul {
   list-style: none;
   text-align: left;
