@@ -14,12 +14,7 @@ const props = defineProps({
     type: Array,
   },
   channels: {
-    creator: String,
-    name: String,
-    id: Number,
-    users: Array,
-    img: String,
-    theme: String,
+    type: Object,
   }
 })
 
@@ -53,7 +48,9 @@ const openPopup = () => {
 }
 
 watchEffect( () => {
+  if(!route.params.id) return;
   currentId = route.params.id;
+  console.log("currentId", currentId)
   getCreator(currentId);
 })
 
