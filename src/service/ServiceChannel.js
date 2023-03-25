@@ -11,12 +11,11 @@ export const ServiceChannel = {
     },
     removeUserFromChannel: async (channelId, userId) => {
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}/user/${userId}`, "DELETE");
-    }
-    /*
-    create: async (title, description, listeId) => {
-        const data = JSON.stringify({title: title, description: description, done: false, list: listeId});
-        return ServiceXhr.callWithAuth("http://localhost:8080/api/v1/tasks", data, "POST");
     },
+    addChannel: async (name, image) => {
+        const data = JSON.stringify({name: name, img: image});
+        return ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/channel", data, "PUT");
+    },/*
     modify: async (id, title, description, isDone, listeId) => {
         const data = JSON.stringify({title: title, description: description, done: isDone, list: listeId});
         const url = "http://localhost:8080/api/v1/tasks/" + id;

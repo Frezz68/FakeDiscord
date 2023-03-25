@@ -1,7 +1,8 @@
 <script setup>
-import {reactive} from "vue";
+import {reactive,defineEmits} from "vue";
 import {ServiceChannel} from "../service/ServiceChannel";
 import {useRouter} from "vue-router";
+
 
 /*let channels = reactive([])
 const initChannel = async () => {
@@ -22,10 +23,18 @@ const props = defineProps({
     type: Object,
   }
 })
+
+const emits = defineEmits(['openOrClosePopup'])
+
+const openPopup = () => {
+  emits('openOrClosePopup',"addChannel",true)
+}
+
 </script>
 <template>
   <div class="left-panel">
     <h3>Channels</h3>
+    <button class="button" v-on:click="openPopup">Ajouter un channel</button>
     <ul v-for="channel of channels">
       <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
 
@@ -75,7 +84,6 @@ const props = defineProps({
 
 }
 
-
 .left-panel ul li img {
   height: 15px;
 
@@ -83,5 +91,21 @@ const props = defineProps({
 
 li:hover {
   background-color: #303338;
+}
+
+.button {
+  margin-left: 7%;
+  width: 85%;
+  padding: 10px;
+  background-color: #5765f2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #4d64b9;
 }
 </style>

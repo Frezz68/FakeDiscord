@@ -44,7 +44,7 @@ const deleteUser = async (user) => {
 }
 
 const openPopup = () => {
-  emits('openOrClosePopup',true)
+  emits('openOrClosePopup',"addUser",true)
 }
 
 watchEffect( () => {
