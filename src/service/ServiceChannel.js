@@ -9,6 +9,9 @@ export const ServiceChannel = {
         console.log("channel", channelId)
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}/user/${userId}`, "PUT");
     },
+    removeUserFromChannel: async (channelId, userId) => {
+        return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}/user/${userId}`, "DELETE");
+    },
     addChannel: async (name, image) => {
         const data = JSON.stringify({name: name, img: image});
         return ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/channel", data, "PUT");
