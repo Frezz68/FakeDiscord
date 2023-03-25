@@ -93,15 +93,15 @@ watch(() => route.params.id, async (newId) => {
 .messages {
   flex-grow: 1;
   overflow-y: auto;
-  margin-left: 160px;
-  margin-bottom: 20px;
+  margin-left: 210px;
+  margin-bottom: 35px;
 }
 
 #prompt {
   position: fixed;
   display: flex;
   bottom: 0;
-  margin-left: 150px;
+  margin-left: 200px;
   /*flex: 1 1 auto;*/
     width: 50%;
     padding: 1em;

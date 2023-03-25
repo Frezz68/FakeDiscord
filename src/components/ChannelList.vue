@@ -1,5 +1,5 @@
 <script setup>
-import {reactive,defineEmits} from "vue";
+import {defineEmits} from "vue";
 import {ServiceChannel} from "../service/ServiceChannel";
 import {useRouter} from "vue-router";
 
@@ -18,6 +18,8 @@ const initChannel = async () => {
 
 initChannel();
 */
+let userConnected = localStorage.getItem("username");
+
 const props = defineProps({
   channels: {
     type: Object,
@@ -26,18 +28,26 @@ const props = defineProps({
 
 const emits = defineEmits(['openOrClosePopup'])
 
-const openPopup = () => {
-  emits('openOrClosePopup',"addChannel",true)
+const openPopup = (type,channelId = null) => {
+  console.log("openPopup", type, channelId)
+  emits('openOrClosePopup',type,channelId,true)
 }
 
 </script>
 <template>
   <div class="left-panel">
     <h3>Channels</h3>
-    <button class="button" v-on:click="openPopup">Ajouter un channel</button>
+    <button class="button" v-on:click="openPopup('addChannel')">Ajouter un channel</button>
     <ul v-for="channel of channels">
-      <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
-
+      <RouterLink :to="`/channels/${channel.id}`">
+        <li>
+          <img :src="channel.img" class="imgChannel">
+          {{ channel.name }}
+        </li>
+      </RouterLink>
+      <div class="delete" v-if="userConnected === channel.creator">
+        <img src="../assets/poubelle.png" alt="Poubelle" class="imgPoubelle" v-on:click="openPopup('deleteChannel',channel.id)">
+      </div>
     </ul>
   </div>
 </template>
@@ -50,8 +60,8 @@ const openPopup = () => {
   top: 0;
   left: 0;
   bottom: 0;
-  width: 150px;
-  background-color: #1e1f22;
+  min-width: 150px;
+  background-color: #2a2d31;
 }
 .left-panel h3 {
   text-align: center;
@@ -65,6 +75,7 @@ const openPopup = () => {
 
 }
 .left-panel ul {
+  display: inline-block;
   list-style: none;
   text-align: left;
   padding: 3px;
@@ -74,23 +85,46 @@ const openPopup = () => {
   color: unset;
 }
 .left-panel ul li {
+  display: inline-block;
   line-height: normal;
   padding-left: 15px;
   padding-top: 3px;
   margin-top: 5px;
-  border-radius: 20px;
+  border-radius: 7px;
   height: 30px;
   font-size: 20px;
 
 }
 
-.left-panel ul li img {
+.left-panel ul li .imgChannel {
   height: 15px;
+}
 
+.left-panel ul .delete .imgPoubelle {
+  height: 25px;
+  width: 25px;
+  right: 5px;
+}
+
+li {
+  width: 90%;
+  height: auto;
 }
 
 li:hover {
   background-color: #303338;
+}
+
+.left-panel ul .delete {
+  display: inline-block;
+  width: 20%;
+  opacity: 0;
+  vertical-align: top;
+  transition: opacity 0.3s ease;
+}
+
+ul:hover .delete {
+  opacity: 1;
 }
 
 .button {

@@ -9,10 +9,10 @@
         </div>
         <button class="button" type="button" @click="addUser">Ajouter</button>
         <button class="button" @click="closePopup">Annuler</button>
-
       </div>
     </div>
   </div>
+
   <div class="vue-modal" v-else-if="type == 'addChannel'">
     <div class="vue-modal-inner">
       <div class="vue-modal-content">
@@ -25,7 +25,19 @@
         </div>
         <button class="button" type="button" @click="addChannel">Ajouter</button>
         <button class="button" @click="closePopup">Annuler</button>
+      </div>
+    </div>
+  </div>
 
+  <div class="vue-modal" v-else-if="type == 'deleteChannel'">
+    <div class="vue-modal-inner">
+      <div class="vue-modal-content">
+        <h2>Confirmation</h2>
+        <div class="add-user-box">
+          <span>Voulez-vous vraiment supprimer ce channel ?</span>
+        </div>
+        <button class="button" type="button" @click="deleteChannel">Valider</button>
+        <button class="button" @click="closePopup">Annuler</button>
       </div>
     </div>
   </div>
@@ -45,11 +57,12 @@ let username = ref("");
 let name = ref("");
 let image = ref("");
 
+
 const props = defineProps({
   type: {
     type: String,
-    required: true,
   },
+  channelId: String,
 });
 
 const emits = defineEmits(['openOrClosePopup', 'refresh'])
@@ -79,10 +92,26 @@ const addUser = () => {
   }
 }
 
-const addChannel = () => {
+const addChannel = async () => {
   console.log("addChannel", name.value)
   if (name.value !== "" && image.value !== "") {
     ServiceChannel.addChannel(name.value, image.value)
+      .then(async (response) => {
+        console.log(response)
+        const result = await response.json();
+        if (response.status === 200) {
+          closePopup();
+          refresh();
+        } else {
+          this.error = result.message;
+        }
+      });
+  }
+}
+const deleteChannel = () => {
+  console.log("deleteChannel", props.channelId)
+  if (props.channelId !== "") {
+    ServiceChannel.deleteChannel(props.channelId)
       .then(async (response) => {
         console.log(response)
         const result = await response.json();

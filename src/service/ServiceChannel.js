@@ -15,7 +15,11 @@ export const ServiceChannel = {
     addChannel: async (name, image) => {
         const data = JSON.stringify({name: name, img: image});
         return ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/channel", data, "PUT");
-    },/*
+    },
+    deleteChannel: async (id) => {
+        return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${id}`, "DELETE");
+    }
+    /*
     modify: async (id, title, description, isDone, listeId) => {
         const data = JSON.stringify({title: title, description: description, done: isDone, list: listeId});
         const url = "http://localhost:8080/api/v1/tasks/" + id;

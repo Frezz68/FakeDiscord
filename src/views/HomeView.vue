@@ -15,6 +15,7 @@ import router from "@/router";
 const channels = reactive([])
 let users = reactive([])
 let type = reactive([])
+let channelId = reactive([])
 
 const route = useRoute();
 let currentId;
@@ -46,15 +47,15 @@ const getAllChannelUser = async (currentId) => {
 
 let showingPopup = reactive({value: false})
 
-const openOrClosePopup = (typeEmit,value) => {
+const openOrClosePopup = (typeEmit,getChannelId,value) => {
   type = typeEmit;
+  channelId = getChannelId;
   showingPopup.value = value;
 }
 
 const refresh = () => {
   initChannel();
   getAllChannelUser(currentId);
-  initChannel();
 }
 
 initChannel();
@@ -70,7 +71,7 @@ watchEffect( () => {
     <ChannelList :channels="channels" @openOrClosePopup="openOrClosePopup"></ChannelList>
     <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
     <Home v-else></Home>
-    <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" @refresh="refresh"></ModalFrame>
+    <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" :channelId="channelId" @refresh="refresh"></ModalFrame>
     <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup" :channels="channels" @refresh="refresh"></UserList>
   </div>
 </template>
