@@ -63,19 +63,65 @@ watchEffect( () => {
 
 </script>
 <template>
-  <div>
-    <ChannelList :channels="channels"></ChannelList>
-    <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
-    <Home v-else></Home>
-    <ModalAddUser v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" @refresh="refresh"></ModalAddUser>
-    <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup" :channels="channels" @refresh="refresh"></UserList>
+  <div class="page">
+    <div class="channel-list">
+      <ChannelList :channels="channels"></ChannelList>
+    </div>
+    <div class="chat">
+      <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
+      <Home v-else></Home>
+      <ModalAddUser v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" @refresh="refresh"></ModalAddUser>
+    </div>
+    <div class="user-list">
+      <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup" :channels="channels" @refresh="refresh"></UserList>
+    </div>
   </div>
 </template>
 
 
 
 <style scoped>
-div{
-  display: flex;
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.channel-list {
+  display: inline-block;
+  width: 15%;
+  height: 100vh;
+  vertical-align: top;
+  box-shadow: 1px 0 5px 1px #252525;
+  border-radius: 5px;
+  background-color: #1e1f22;
+}
+
+.chat {
+  display: inline-block;
+  width: 70%;
+  vertical-align: top;
+  height: 100vh;
+}
+
+.user-list {
+  display: inline-block;
+  width: 15%;
+  height: 100%;
+  vertical-align: top;
+  box-shadow: 1px 0 5px 1px #252525;
+  border-radius: 5px;
+  background-color: #2a2d31;
+}
+
+@media (max-width: 1100px) {
+  .channel-list {
+    display: none;
+  }
+  .user-list {
+    display: none;
+  }
+  .chat {
+    width: 100%;
+  }
 }
 </style>
