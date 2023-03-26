@@ -72,7 +72,7 @@ watchEffect( () => {
       <ChannelList :channels="channels"></ChannelList>
     </div>
     <div class="chat">
-      <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
+      <ChatPrompt v-if="channels.find(c => c.id == currentId)" @openOrClosePopup="openOrClosePopup" :channels="channels"></ChatPrompt>
       <Home v-else></Home>
       <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" :channelId="channelId" @refresh="refresh"></ModalFrame>
     </div>
