@@ -77,17 +77,7 @@ watchEffect( () => {
 </template>
 
 <style scoped>
-.right-panel {
-  position: fixed;
-  flex-basis: 150px;
-  flex-direction: column;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 180px;
-  background-color: #2a2d31;
-}
-.right-panel h3 {
+h3 {
   text-align: center;
   border-radius: 5px;
   box-shadow: 1px 0 5px 1px #252525;

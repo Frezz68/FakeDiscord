@@ -56,16 +56,7 @@ const openPopup = (type,channelId = null) => {
 </template>
 
 <style scoped>
-.left-panel {
-  position: fixed;
-  flex-basis: 150px;
-  flex-direction: column;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  min-width: 150px;
-  background-color: #2a2d31;
-}
+
 .left-panel h3 {
   text-align: center;
   border-radius: 5px;

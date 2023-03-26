@@ -83,35 +83,27 @@ watch(() => route.params.id, async (newId) => {
 </template>
 
 <style >
-.chat {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
 
-/* Liste des messages */
 .messages {
-  flex-grow: 1;
+  position: absolute;
+  width: 70%;
+  height: 95vh;
   overflow-y: auto;
-  margin-left: 210px;
-  margin-bottom: 35px;
 }
 
 #prompt {
   position: fixed;
-  display: flex;
   bottom: 0;
-  margin-left: 200px;
-  /*flex: 1 1 auto;*/
-    width: 50%;
-    padding: 1em;
-    /* margin: 1em;
-    margin-left: 1%;
-    margin-right: 1%;
-    margin-top: 45%;
-    margin-bottom: 1%;*/
-    background-color: gainsboro;
-    border-radius: 18px;
+  margin-left: 1%;
+  width: 66%;
+  padding: 1em;
+  border-radius: 18px;
+}
 
+
+@media (max-width: 1100px) {
+  #prompt {
+    width: 95%;
+  }
 }
 </style>
