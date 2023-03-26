@@ -10,6 +10,6 @@
 
 <style scoped>
 h1 {
-  margin-left: 150px;
+  margin-left: 210px;
 }
 </style>

@@ -100,6 +100,7 @@ watch(() => route.params.id, async (newId) => {
   border-radius: 18px;
 }
 
+
 @media (max-width: 1100px) {
   #prompt {
     width: 95%;

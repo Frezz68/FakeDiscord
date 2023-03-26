@@ -1,12 +1,12 @@
 <script setup>
 import UserItem from './UserItem.vue'
-import {defineEmits, watchEffect} from 'vue'
+import {defineEmits, reactive, watchEffect} from 'vue'
 import {useRoute} from "vue-router";
 import {ServiceChannel} from "../service/ServiceChannel";
 
 const route = useRoute();
 let currentId;
-let channelCreator;
+let channelCreator = reactive({});
 let userConnected = localStorage.getItem("username");
 
 const props = defineProps({
@@ -26,6 +26,7 @@ const  refreshUser = () => {
 
 const getCreator = (currentId) => {
   let channel = props.channels.find(channel => channel.id == currentId)
+  if(!channel) return;
   channelCreator = channel.creator
 }
 
@@ -44,7 +45,7 @@ const deleteUser = async (user) => {
 }
 
 const openPopup = () => {
-  emits('openOrClosePopup',true)
+  emits('openOrClosePopup',"addUser",null,true)
 }
 
 watchEffect( () => {

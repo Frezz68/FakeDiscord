@@ -11,12 +11,27 @@ export const ServiceChannel = {
     },
     removeUserFromChannel: async (channelId, userId) => {
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}/user/${userId}`, "DELETE");
+    },
+    addChannel: async (name, image) => {
+        const data = JSON.stringify({name: name, img: image});
+        return ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/channel", data, "PUT");
+    },
+    deleteChannel: async (id) => {
+        return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${id}`, "DELETE");
+    },
+    editChannel: async (id, name, image) => {
+        const data = JSON.stringify({name: name, img: image,
+            theme: {
+                primary_color: "#E91E63",
+                primary_color_dark: "#C2185B",
+                accent_color: "#00BCD4",
+                text_color: "#212121",
+                accent_text_color: "#FFFFFF"
+            }
+        });
+        return ServiceXhr.callWithAuth(`https://edu.tardigrade.land/msg/protected/channel/${id}/update_metadata`, data, "POST");
     }
     /*
-    create: async (title, description, listeId) => {
-        const data = JSON.stringify({title: title, description: description, done: false, list: listeId});
-        return ServiceXhr.callWithAuth("http://localhost:8080/api/v1/tasks", data, "POST");
-    },
     modify: async (id, title, description, isDone, listeId) => {
         const data = JSON.stringify({title: title, description: description, done: isDone, list: listeId});
         const url = "http://localhost:8080/api/v1/tasks/" + id;
