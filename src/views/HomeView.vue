@@ -69,7 +69,7 @@ watchEffect( () => {
 <template>
   <div class="page">
     <div class="channel-list">
-      <ChannelList :channels="channels"></ChannelList>
+      <ChannelList :channels="channels" @openOrClosePopup="openOrClosePopup"></ChannelList>
     </div>
     <div class="chat">
       <ChatPrompt v-if="channels.find(c => c.id == currentId)" @openOrClosePopup="openOrClosePopup" :channels="channels"></ChatPrompt>
