@@ -45,8 +45,11 @@ const openPopup = (type,channelId = null) => {
           {{ channel.name }}
         </li>
       </RouterLink>
-      <div class="delete" v-if="userConnected === channel.creator">
-        <img src="../assets/poubelle.png" alt="Poubelle" class="imgPoubelle" v-on:click="openPopup('deleteChannel',channel.id)">
+      <div class="channelManager" v-if="userConnected === channel.creator">
+        <img src="../assets/bouton-modifier.png" alt="modifier" class="imgManager" v-on:click="openPopup('editChannel',channel.id)">
+      </div>
+      <div class="channelManager" v-if="userConnected === channel.creator">
+        <img src="../assets/poubelle.png" alt="Poubelle" class="imgManager" v-on:click="openPopup('deleteChannel',channel.id)">
       </div>
     </ul>
   </div>
@@ -100,7 +103,7 @@ const openPopup = (type,channelId = null) => {
   height: 15px;
 }
 
-.left-panel ul .delete .imgPoubelle {
+.left-panel ul .channelManager .imgManager {
   height: 25px;
   width: 25px;
   right: 5px;
@@ -115,7 +118,7 @@ li:hover {
   background-color: #303338;
 }
 
-.left-panel ul .delete {
+.left-panel ul .channelManager {
   display: inline-block;
   width: 20%;
   opacity: 0;
@@ -123,7 +126,7 @@ li:hover {
   transition: opacity 0.3s ease;
 }
 
-ul:hover .delete {
+ul:hover .channelManager {
   opacity: 1;
 }
 
