@@ -20,6 +20,22 @@ let channelId = reactive([])
 const route = useRoute();
 let currentId;
 
+// const theme = {
+//     primary_color: ref(''),
+//     primary_color_dark: ref(''),
+//     accent_color: ref(''),
+//     text_color: ref(''),
+//     accent_text_color: ref('')
+// }
+
+// const discordTHeme = computed(() => ({
+//   primary_color : theme.primary_color,
+//   primary_color_dark: theme.primary_color_dark,
+//   accent_color: theme.accent_color,
+//   text_color: theme.text_color,
+//   accent_color: theme.accent_text_color
+// }))
+
 const initChannel = async () => {
   const response = await ServiceChannel.getAllChannel();
   if (response.status === 200) {
@@ -69,7 +85,7 @@ watchEffect( () => {
 <template>
   <div class="page">
     <div class="channel-list">
-      <ChannelList :channels="channels"></ChannelList>
+      <ChannelList :channels="channels"  @openOrClosePopup="openOrClosePopup" ></ChannelList>
     </div>
     <div class="chat">
       <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>

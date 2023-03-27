@@ -4,20 +4,6 @@ import {ServiceChannel} from "../service/ServiceChannel";
 import {useRouter} from "vue-router";
 
 
-/*let channels = reactive([])
-const initChannel = async () => {
-  const response = await ServiceChannel.getAllChannel()
-  const result = await response.json();
-  if (response.status === 200) {
-    for (let channel of result){
-      channels.push(channel)
-    }
-    console.log(channels)
-  }
-}
-
-initChannel();
-*/
 let userConnected = localStorage.getItem("username");
 
 const props = defineProps({
@@ -38,6 +24,24 @@ const openPopup = (type,channelId = null) => {
   <div class="left-panel">
     <h3>Channels</h3>
     <button class="button" v-on:click="openPopup('addChannel')">Ajouter un channel</button>
+    <div class="vue-modal" >
+    <div class="vue-modal-inner">
+      <div class="vue-modal-content">
+        <div class="add-user-box">
+          <label for="image"> theme </label>
+          <select name="theme" id="lang">
+          <option value="theme 1 ">theme 1 </option>
+          <option value="theme 2 ">theme 2</option>
+          <option value="theme 3 ">theme 3 </option>
+          <option value="theme 4 ">theme 4</option>
+          <option value="theme 5">theme 5</option>
+          </select>
+          <input type="submit" value="Modifier le theme" />
+        </div>
+      </div>
+    </div>
+  </div>
+  
     <ul v-for="channel of channels">
       <RouterLink :to="`/channels/${channel.id}`">
         <li>

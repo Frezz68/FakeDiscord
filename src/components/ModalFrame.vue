@@ -57,6 +57,28 @@
       </div>
     </div>
   </div>
+
+  <div class="vue-modal" >
+    <div class="vue-modal-inner">
+      <div class="vue-modal-content">
+        <h2>Modifier le theme</h2>
+        <div class="add-user-box">
+          <label for="image"> theme </label>
+          <select name="theme" id="lang">
+          <option value="theme 1 ">theme 1 </option>
+          <option value="theme 2 ">theme 2</option>
+          <option value="theme 3 ">theme 3 </option>
+          <option value="theme 4 ">theme 4</option>
+          <option value="theme 5">theme 5</option>
+          </select>
+          <input type="submit" value="Submit" />
+        </div>
+        <button class="button" type="button" @click="editChannel">Ajouter</button>
+        <button class="button" @click="closePopup">Annuler</button>
+      </div>
+    </div>
+  </div>
+  
 </template>
 
 <script setup>
