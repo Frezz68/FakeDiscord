@@ -6,11 +6,11 @@ import ChannelList from "@/components/ChannelList.vue";
 import ModalFrame from "@/components/ModalFrame.vue";
 import Home from "@/components/Home.vue";
 
-import {reactive, watchEffect} from "vue";
-import {ServiceChannel} from "@/service/ServiceChannel";
-import {useUserStore} from "./../store/users"
+import { reactive, watchEffect } from "vue";
+import { ServiceChannel } from "@/service/ServiceChannel";
+import { useUserStore } from "./../store/users"
 
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 import router from "@/router";
 
 const channels = reactive([])
@@ -43,11 +43,11 @@ const initChannel = async () => {
   if (response.status === 200) {
     const result = await response.json();
     channels.splice(0)
-    for (let channel of result){
+    for (let channel of result) {
       channels.push(channel)
     }
   }
-  else if (response.status === 401){
+  else if (response.status === 401) {
     localStorage.removeItem('token')
     router.push({ path: '/' })
     console.log("401 channel")
@@ -57,16 +57,19 @@ const initChannel = async () => {
 const getAllChannelUser = async (currentId) => {
   users.splice(0)
   let filteredChannels = channels.find(channel => channel.id == currentId)
-  if(!filteredChannels) return;
-  store.setTheme(filteredChannels.theme)
-  for (let user of filteredChannels.users){
+  if (!filteredChannels) return;
+  if (filteredChannels.theme != null) {
+    store.setTheme(filteredChannels.theme)
+  }
+  
+  for (let user of filteredChannels.users) {
     users.push(user)
   }
 }
 
-let showingPopup = reactive({value: false})
+let showingPopup = reactive({ value: false })
 
-const openOrClosePopup = (typeEmit,getChannelId,value) => {
+const openOrClosePopup = (typeEmit, getChannelId, value) => {
   type = typeEmit;
   channelId = getChannelId;
   showingPopup.value = value;
@@ -79,24 +82,27 @@ const refresh = () => {
 
 initChannel();
 
-watchEffect( () => {
+watchEffect(() => {
   currentId = route.params.id;
   getAllChannelUser(currentId);
 })
 
 </script>
 <template>
-  <div class="page" :style="{color: store.theme.primary_color}">
+  <div class="page"
+    :style="{ color: store.theme.text_color, background: store.theme.primary_color, 'accent-color': store.theme.accent_color}">
     <div class="channel-list">
-      <ChannelList :channels="channels"  @openOrClosePopup="openOrClosePopup" ></ChannelList>
+      <ChannelList :channels="channels" @openOrClosePopup="openOrClosePopup"></ChannelList>
     </div>
     <div class="chat">
       <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
       <Home v-else></Home>
-      <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" :channelId="channelId" @refresh="refresh"></ModalFrame>
+      <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" :channelId="channelId"
+        @refresh="refresh"></ModalFrame>
     </div>
     <div class="user-list">
-      <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup" :channels="channels" @refresh="refresh"></UserList>
+      <UserList v-if="channels" :users="users" @openOrClosePopup="openOrClosePopup" :channels="channels"
+        @refresh="refresh"></UserList>
     </div>
   </div>
 </template>
@@ -140,9 +146,11 @@ watchEffect( () => {
   .channel-list {
     display: none;
   }
+
   .user-list {
     display: none;
   }
+
   .chat {
     width: 100%;
   }
