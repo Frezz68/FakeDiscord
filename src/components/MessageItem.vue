@@ -1,10 +1,13 @@
 <script setup>
-import {ref, watchEffect} from "vue";
+import {reactive, ref, watchEffect} from "vue";
 import {useRoute} from "vue-router";
 import {ServiceMessage} from "../service/ServiceMessage";
 
 const props = defineProps({
   message: {
+    type: Object,
+  },
+  channels: {
     type: Object,
   }
 })
@@ -13,6 +16,9 @@ const dateNow = new Date();
 let dateStr = "";
 const route = useRoute();
 let currentId;
+let channelCreator = reactive({});
+let userConnected = localStorage.getItem("username");
+let edit = ref(false)
 
 const affichageDate = (datemsg, dateNow) => {
   if (datemsg.getDate() === dateNow.getDate() && datemsg.getMonth() === dateNow.getMonth() && datemsg.getFullYear() === dateNow.getFullYear()) {
@@ -24,24 +30,21 @@ const affichageDate = (datemsg, dateNow) => {
   }
 }
 
-let edit = ref(false)
 const goEdit = () => {
-  console.log(edit)
   edit.value = true;
 }
 
-affichageDate(datemsg, dateNow);
-
-watchEffect( () => {
-  if(!route.params.id) return;
-  currentId = route.params.id;
-})
+const getCreator = (currentId) => {
+  let channel = props.channels.find(channel => channel.id == currentId)
+  if(!channel) return;
+  channelCreator = channel.creator
+}
 
 const editContent = async () => {
   console.log("editMessage", props.message)
   try {
     let data;
-    if (props.message.content.Text !== null && currentId !== null) {
+    if (props.message.content.Text && currentId !== null) {
       data = {
         "channel_id": parseInt(currentId),
         "timestamp": props.message.timestamp,
@@ -51,8 +54,9 @@ const editContent = async () => {
         }
       }
     } else {
+      console.log("image")
       data = {
-        "channel_id": currentId,
+        "channel_id": parseInt(currentId),
         "timestamp": props.message.timestamp,
         "author": props.message.author,
         "content": {
@@ -73,11 +77,19 @@ const editContent = async () => {
       console.log(e);
     }
   }
+
+affichageDate(datemsg, dateNow);
+
+watchEffect( () => {
+  if(!route.params.id) return;
+  currentId = route.params.id;
+  getCreator(currentId);
+})
 </script>
 
 <template>
   <div class="message-box">
-    <img v-if="!edit" class="imgDelete" src="../assets/bouton-modifier.png" v-on:click="goEdit">
+    <img v-if="!edit && channelCreator == userConnected" class="imgDelete" src="../assets/bouton-modifier.png" v-on:click="goEdit">
     <div class="authorDate">
       <h3>{{ message.author }} </h3><span>{{ dateStr}}</span>
     </div>

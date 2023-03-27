@@ -70,7 +70,7 @@ watch(() => route.params.id, async (newId) => {
 
   <div class="chat">
     <div class="messages">
-      <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
+      <MessageItem v-for="message of messages" :key="messages" :message="message" :channels="props.channels"></MessageItem>
       <!-- Liste des messages -->
     </div>
     <div class="input">
