@@ -117,7 +117,7 @@ watchEffect( () => {
   background-color: #2a2d31;
 }
 
-@media (max-width: 1100px) {
+/*@media (max-width: 1100px) {
   .channel-list {
     display: none;
   }
@@ -127,5 +127,5 @@ watchEffect( () => {
   .chat {
     width: 100%;
   }
-}
+}*/
 </style>

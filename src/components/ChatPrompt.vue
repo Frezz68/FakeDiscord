@@ -101,9 +101,12 @@ watch(() => route.params.id, async (newId) => {
 }
 
 
-@media (max-width: 1100px) {
+/*@media (max-width: 1100px) {
   #prompt {
     width: 95%;
   }
-}
+  .messages {
+    width: 99%;
+  }
+}*/
 </style>

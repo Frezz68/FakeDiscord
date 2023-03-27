@@ -3,21 +3,6 @@ import {defineEmits} from "vue";
 import {ServiceChannel} from "../service/ServiceChannel";
 import {useRouter} from "vue-router";
 
-
-/*let channels = reactive([])
-const initChannel = async () => {
-  const response = await ServiceChannel.getAllChannel()
-  const result = await response.json();
-  if (response.status === 200) {
-    for (let channel of result){
-      channels.push(channel)
-    }
-    console.log(channels)
-  }
-}
-
-initChannel();
-*/
 let userConnected = localStorage.getItem("username");
 
 const props = defineProps({
@@ -73,6 +58,8 @@ const openPopup = (type,channelId = null) => {
   list-style: none;
   text-align: left;
   padding: 3px;
+  width: 99%;
+  height: auto;
 }
 .left-panel ul a {
   text-decoration: none;
