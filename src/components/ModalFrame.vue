@@ -51,6 +51,14 @@
           <input v-model="name" type="text" id="user" required><br>
           <label for="image">URL de l'image </label>
           <input v-model="image" type="text" id="image" required><br>
+          <label for="image"> theme </label>
+          <select name="theme" id="lang" v-model="selectValue" required>
+          <option value="0 ">theme 1 </option>
+          <option value="1">theme 2</option>
+          <option value="2">theme 3 </option>
+          <option value="3">theme 4</option>
+          <option value="4">theme 5</option>
+          </select>
         </div>
         <button class="button" type="button" @click="editChannel">Ajouter</button>
         <button class="button" @click="closePopup">Annuler</button>
@@ -58,26 +66,7 @@
     </div>
   </div>
 
-  <div class="vue-modal" >
-    <div class="vue-modal-inner">
-      <div class="vue-modal-content">
-        <h2>Modifier le theme</h2>
-        <div class="add-user-box">
-          <label for="image"> theme </label>
-          <select name="theme" id="lang">
-          <option value="theme 1 ">theme 1 </option>
-          <option value="theme 2 ">theme 2</option>
-          <option value="theme 3 ">theme 3 </option>
-          <option value="theme 4 ">theme 4</option>
-          <option value="theme 5">theme 5</option>
-          </select>
-          <input type="submit" value="Submit" />
-        </div>
-        <button class="button" type="button" @click="editChannel">Ajouter</button>
-        <button class="button" @click="closePopup">Annuler</button>
-      </div>
-    </div>
-  </div>
+
   
 </template>
 
@@ -85,9 +74,11 @@
 import {ServiceChannel} from "../service/ServiceChannel";
 import {useRoute} from "vue-router";
 import {defineEmits, ref} from "vue";
+import { themeList } from "./../service/theming";
 
 const route = useRoute();
 let currentId;
+
 // adduser
 let username = ref("");
 
@@ -95,6 +86,7 @@ let username = ref("");
 let name = ref("");
 let image = ref("");
 
+let selectValue = ref()
 
 const props = defineProps({
   type: {
@@ -165,7 +157,8 @@ const deleteChannel = () => {
 const editChannel = () => {
   console.log("editChannel", props.channelId)
   if (props.channelId !== "") {
-    ServiceChannel.editChannel(props.channelId,name.value,image.value)
+    console.log("log du selectval",selectValue.value);
+    ServiceChannel.editChannel(props.channelId,name.value,image.value,themeList[selectValue.value])
       .then(async (response) => {
         console.log(response)
         const result = await response.json();
