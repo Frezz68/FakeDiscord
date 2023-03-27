@@ -9,8 +9,13 @@ import {useRoute} from "vue-router";
 import Home from "@/components/Home.vue";
 import router from "@/router";
 
+import {useUserStore} from "./../store/users";
+
 const channels = reactive([])
 let users = reactive([])
+
+const username = localStorage.getItem("user");
+let store = useUserStore();
 
 const route = useRoute();
 let currentId;
@@ -33,7 +38,10 @@ const initChannel = async () => {
 const getAllChannelUser = async (currentId) => {
   users.splice(0)
   let filteredChannels = channels.find(channel => channel.id == currentId)
+
   if(!filteredChannels) return;
+
+  store.moderation(filteredChannels.creator == username)
   for (let user of filteredChannels.users){
     users.push(user)
   }
@@ -50,7 +58,7 @@ watchEffect( () => {
 <template>
   <div>
   <ChannelList :channels="channels"></ChannelList>
-  <ChatPrompt v-if="channels.find(c => c.id == currentId)"></ChatPrompt>
+  <ChatPrompt v-if="channels.find(c => c.id == currentId)" isCreator ></ChatPrompt>
   <Home v-else></Home>
   <UserList v-if="channels" :users="users"></UserList>
   </div>
