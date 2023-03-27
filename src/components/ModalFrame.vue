@@ -157,7 +157,7 @@ const deleteChannel = () => {
 }
 const editChannel = () => {
   console.log("editChannel", props.channelId)
-  if (props.channelId !== "") {
+  if (props.channelId !== "" && name.value !== "" && image.value !== "") {
     ServiceChannel.editChannel(props.channelId,name.value,image.value)
       .then(async (response) => {
         console.log(response)
@@ -174,7 +174,7 @@ const editChannel = () => {
 
 const SendImage = () => {
   console.log("SendImage", props.channelId)
-  if (props.channelId !== "") {
+  if (props.channelId !== "" && image.value !== "") {
     ServiceMessage.sendImage(props.channelId,image.value)
       .then(async (response) => {
         console.log(response)
