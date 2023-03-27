@@ -28,9 +28,7 @@ const props = defineProps({
     <h3>Channels <Button class="addChann">+</Button></h3>
     <hr>
     <ul v-for="channel of channels">
-        <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
-      
-
+        <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink> 
     </ul>
   </div>
 </template>

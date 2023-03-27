@@ -68,8 +68,6 @@ watch(() => route.params.id, (newId) => {
   overflow-y: auto;
   margin-left: 160px;
   margin-bottom: 35px;
-  border:#554949 solid 1px;
-  /* margin-right: 160px; */
 }
 
 #prompt {
