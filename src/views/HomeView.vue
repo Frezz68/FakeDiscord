@@ -8,6 +8,7 @@ import Home from "@/components/Home.vue";
 
 import {reactive, watchEffect} from "vue";
 import {ServiceChannel} from "@/service/ServiceChannel";
+import {useUserStore} from "./../store/users"
 
 import {useRoute} from "vue-router";
 import router from "@/router";
@@ -16,6 +17,7 @@ const channels = reactive([])
 let users = reactive([])
 let type = reactive([])
 let channelId = reactive([])
+const store = useUserStore()
 
 const route = useRoute();
 let currentId;
@@ -56,6 +58,7 @@ const getAllChannelUser = async (currentId) => {
   users.splice(0)
   let filteredChannels = channels.find(channel => channel.id == currentId)
   if(!filteredChannels) return;
+  store.setTheme(filteredChannels.theme)
   for (let user of filteredChannels.users){
     users.push(user)
   }
@@ -83,7 +86,7 @@ watchEffect( () => {
 
 </script>
 <template>
-  <div class="page">
+  <div class="page" :style="{color: store.theme.primary_color}">
     <div class="channel-list">
       <ChannelList :channels="channels"  @openOrClosePopup="openOrClosePopup" ></ChannelList>
     </div>

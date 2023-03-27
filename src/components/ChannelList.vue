@@ -7,16 +7,12 @@ const route = useRoute()
 const store = useUserStore()
 
 let userConnected = localStorage.getItem("username");
-let currentId = route.params.id;
 
 const props = defineProps({
   channels: {
     type: Object,
   }
 })
-let chan = store.filterChannel(currentId,props.channels)
-
-console.log(chan);
 
 
 const emits = defineEmits(['openOrClosePopup'])
@@ -29,7 +25,7 @@ const openPopup = (type,channelId = null) => {
 </script>
 <template>
   <div >
-    <div class="left-panel" :style="{color: chan.theme.primary_color}">
+    <div class="left-panel" :style="{color: store.theme.primary_color}">
     <h3>Channels</h3>
     <button class="button" v-on:click="openPopup('addChannel')">Ajouter un channel</button>
     <ul v-for="channel of channels">

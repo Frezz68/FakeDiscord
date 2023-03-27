@@ -5,7 +5,8 @@ export const useUserStore = defineStore("users", {
         users: [],
         userIsModerator: false,
         loginUserName: '',
-        channels: []
+        channels: [],
+        theme:{}
     }),
     actions: {
         moderation: function (isModerator) {
@@ -19,6 +20,9 @@ export const useUserStore = defineStore("users", {
             let filteredChannels = channels.find(channel => channel.id == currentId)
             if (!filteredChannels) return;
             return filteredChannels
+        },
+        setTheme: function(setTheme){
+            this.theme = setTheme
         }
     },
 })
