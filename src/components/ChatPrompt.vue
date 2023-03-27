@@ -22,12 +22,14 @@ const getAllMessages = async (currentId) => {
   }
 }
 const sendMessage = async () => {
-  console.log(promptMsg.value);
-  const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
-  if (response.status === 200) {
+  if (promptMsg.value.trim() !== '') {
+    console.log(promptMsg.value);
+    const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
+    if (response.status === 200) {
+      console.log(response);
+    }
     console.log(response);
   }
-  console.log(response);
 }
 getAllMessages(currentId);
 
@@ -35,7 +37,6 @@ watch(() => route.params.id, (newId) => {
   currentId = newId;
   getAllMessages(currentId);
 })
-
 </script>
 
 <template>
@@ -48,6 +49,7 @@ watch(() => route.params.id, (newId) => {
     <div class="input">
       <form @submit.prevent="sendMessage()">
       <input type="text" id="prompt" name="Text" placeholder="ECRIVEZ UN MESSAGE..." v-model="promptMsg" >
+      
       </form>
     </div>
   </div>
@@ -66,6 +68,8 @@ watch(() => route.params.id, (newId) => {
   overflow-y: auto;
   margin-left: 160px;
   margin-bottom: 35px;
+  border:#554949 solid 1px;
+  /* margin-right: 160px; */
 }
 
 #prompt {
@@ -79,6 +83,7 @@ watch(() => route.params.id, (newId) => {
   border-radius: 30px;
   color: #D9D9D9;
   border: none;
+ 
 }
 
 #prompt::placeholder {
@@ -86,6 +91,6 @@ watch(() => route.params.id, (newId) => {
   font-weight: 400;
   font-size: 15px;
   line-height: 21px;
-  opacity: 0.6;
+  opacity: 0.6; 
 }
 </style>

@@ -8,7 +8,6 @@ const props = defineProps({
 const date = new Date(props.message.timestamp);
 const dateStr = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()+
     " "+date.getHours()+":"+date.getMinutes();
-
 </script>
 
 <template>

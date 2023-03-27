@@ -37,6 +37,7 @@ const props = defineProps({
   color: #554949;
   background-color: #D9D9D9;
 }
+
 .right-panel ul {
   list-style: none;
   text-align: left;
@@ -57,9 +58,10 @@ const props = defineProps({
   margin: 15px 8px;
 }
 
-.right-panel ul li:hover {
+.right-panel ul li:hover, .right-panel h3:hover {
   background-color: #303338;
   color: #D9D9D9;
+  transition-duration: 0.5s;
 }
 
 hr {

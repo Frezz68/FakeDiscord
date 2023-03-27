@@ -25,10 +25,11 @@ const props = defineProps({
 </script>
 <template>
   <div class="left-panel">
-    <h3>Channels <Button style="background-color: transparent; color: white; border-radius: 50px; padding: 2px">+</Button></h3>
+    <h3>Channels <Button class="addChann">+</Button></h3>
     <hr>
     <ul v-for="channel of channels">
-      <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
+        <RouterLink :to="`/channels/${channel.id}`"><li><img :src="channel.img"> {{ channel.name }}</li></RouterLink>
+      
 
     </ul>
   </div>
@@ -89,13 +90,27 @@ const props = defineProps({
 
 }
 
-li:hover {
-  background-color: #303338;
-}
-
 hr {
   margin: 5px 13px;
   background-color: #D9D9D9; 
   height: 1.25px;  
+}
+
+.addChann {
+  background-color: transparent; 
+  color: #554949; 
+  border: transparent; 
+  border-radius: 30px;
+  /* margin-left:2px;  */
+  font-size: 15px; 
+  font-weight: bold;
+  padding: 3px;
+  margin: 3px;
+}
+
+.left-panel ul li:hover, .left-panel h3:hover {
+  background-color: #303338;
+  color: #D9D9D9;
+  transition-duration: 0.5s;
 }
 </style>
