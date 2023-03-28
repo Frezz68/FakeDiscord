@@ -36,6 +36,7 @@ const getAllMessages = async (currentId) => {
   }
 }
 const sendMessage = async () => {
+  if (/^\s*$/.test(promptMsg.value)) return;
   if(promptMsg.value === '') return;
   const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
   if (response.status === 200) {
@@ -77,7 +78,7 @@ const openPopup = (type,channelId = null) => {
 
   <div class="chat">
     <div class="messages">
-      <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
+      <MessageItem v-for="message of messages" :key="messages" :message="message" :channels="props.channels"></MessageItem>
       <!-- Liste des messages -->
     </div>
     <div class="input">
@@ -129,9 +130,12 @@ const openPopup = (type,channelId = null) => {
 }
 
 
-@media (max-width: 1100px) {
+/*@media (max-width: 1100px) {
   #prompt {
     width: 95%;
   }
-}
+  .messages {
+    width: 99%;
+  }
+}*/
 </style>
