@@ -4,11 +4,12 @@ import {ServiceMessage} from "@/service/ServiceMessage";
 import {reactive, watch, ref, defineEmits} from "vue";
 import {useRoute} from "vue-router";
 import {getWebSocket} from "@/websocket/websocket";
-
 const messages = reactive([]);
 const promptMsg = ref('');
 const route = useRoute();
+let nbMessages = ref(0);
 let currentId = route.params.id;
+let channelChaged = -1;
 let placeholderText = ref('');
 const props = defineProps({
   channels: {
@@ -25,18 +26,24 @@ changePromptName(currentId);
 let ws = getWebSocket(currentId,localStorage.getItem("token"));
 
 const getAllMessages = async (currentId) => {
-  messages.splice(0)
-  const response = await ServiceMessage.getAllMessages(currentId);
+  if (currentId !== channelChaged) {
+    channelChaged = currentId;
+    messages.splice(0)
+    nbMessages = 0;
+  }
+
+  const response = await ServiceMessage.getAllMessages(currentId, nbMessages);
   if (response.status === 200) {
     const result = await response.json();
     for (let message of result){
       messages.push(message)
+      nbMessages++;
     }
   }
 }
+
 const sendMessage = async () => {
   if (/^\s*$/.test(promptMsg.value)) return;
-  if(promptMsg.value === '') return;
   const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
   if (response.status === 200) {
     promptMsg.value = '';
@@ -73,8 +80,10 @@ const openPopup = (type,channelId = null) => {
 </script>
 
 <template>
-
     <div class="messages">
+      <button class="moreMessagesButton" v-on:click="getAllMessages(currentId)">
+        Plus de messages
+      </button>
       <MessageItem v-for="message of messages" :key="messages" :message="message" :channels="props.channels"></MessageItem>
       <!-- Liste des messages -->
     </div>
