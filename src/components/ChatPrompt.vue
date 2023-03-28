@@ -35,10 +35,13 @@ const getAllMessages = async (currentId) => {
   const response = await ServiceMessage.getAllMessages(currentId, nbMessages);
   if (response.status === 200) {
     const result = await response.json();
+    const temp = messages;
+    messages.splice(0)
     for (let message of result){
       messages.push(message)
       nbMessages++;
     }
+    messages.push(...temp)
   }
 }
 
