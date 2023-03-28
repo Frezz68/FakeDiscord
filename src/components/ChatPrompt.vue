@@ -1,7 +1,7 @@
 <script setup>
 import MessageItem from "@/components/MessageItem.vue";
 import {ServiceMessage} from "@/service/ServiceMessage";
-import {reactive, watch, ref} from "vue";
+import {reactive, watch, ref, defineEmits} from "vue";
 import {useRoute} from "vue-router";
 import {getWebSocket} from "@/websocket/websocket";
 
@@ -36,6 +36,8 @@ const getAllMessages = async (currentId) => {
   }
 }
 const sendMessage = async () => {
+  if (/^\s*$/.test(promptMsg.value)) return;
+  if(promptMsg.value === '') return;
   const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
   if (response.status === 200) {
     promptMsg.value = '';
@@ -63,6 +65,12 @@ watch(() => route.params.id, async (newId) => {
   await initWebSocket();
 })
 
+const emits = defineEmits(['openOrClosePopup'])
+
+const openPopup = (type,channelId = null) => {
+  console.log("openPopup", type, channelId)
+  emits('openOrClosePopup',type,channelId,true)
+}
 
 </script>
 
@@ -70,13 +78,21 @@ watch(() => route.params.id, async (newId) => {
 
     <div class="messages">
       <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
-      <form @submit.prevent="sendMessage()">
-      <input type="text" id="prompt" name="Text" :placeholder="placeholderText" v-model="promptMsg" >
-      </form>
+      <MessageItem v-for="message of messages" :key="messages" :message="message" :channels="props.channels"></MessageItem>
       <!-- Liste des messages -->
+    </div>
+    <div class="input">
+      <!--<input type="text" placeholder="Envoyer un message..."> -->
+      <form @submit.prevent="sendMessage()">
+        <input type="text" id="prompt" name="Text" :placeholder="placeholderText" v-model="promptMsg" >
+      </form>
+      <button class="sendImg" v-on:click="openPopup('sendImage',currentId)">
+        <img class="Image" src="../assets/image.png" >
+      </button>
     </div>
       <!--<input type="text" placeholder="Envoyer un message..."> -->
 </template>
+
 <style >
 .messages {
   position: absolute;
@@ -85,12 +101,40 @@ watch(() => route.params.id, async (newId) => {
   overflow-y: auto;
 }
 
-#prompt {
+.input #prompt {
   position: fixed;
   bottom: 0;
-  width: 77%;
+  margin-left: 1%;
+  width: 60%;
   padding: 1em;
   border-radius: 18px;
 }
 
+.input .sendImg {
+  position: fixed;
+  bottom: 0;
+  right: 16%;
+  width: 60px;
+  background-color: #2e3035;
+  border-radius: 8px;
+}
+
+.input .sendImg:hover {
+  background-color: #3f4146;
+}
+
+.input .sendImg .Image {
+  width: 80%;
+  height: 100%;
+}
+
+
+/*@media (max-width: 1100px) {
+  #prompt {
+    width: 95%;
+  }
+  .messages {
+    width: 99%;
+  }
+}*/
 </style>

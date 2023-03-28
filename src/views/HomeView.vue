@@ -98,7 +98,7 @@ watchEffect(() => {
       <ChannelList :channels="channels" @openOrClosePopup="openOrClosePopup"></ChannelList>
     </div>
     <div class="chat">
-      <ChatPrompt v-if="channels.find(c => c.id == currentId)" :channels="channels"></ChatPrompt>
+      <ChatPrompt v-if="channels.find(c => c.id == currentId)" @openOrClosePopup="openOrClosePopup" :channels="channels"></ChatPrompt>
       <Home v-else></Home>
       <ModalFrame v-if="showingPopup.value" @openOrClosePopup="openOrClosePopup" :type="type" :channelId="channelId"
         @refresh="refresh"></ModalFrame>
@@ -138,4 +138,16 @@ watchEffect(() => {
   border-radius: 5px;
   background-color: #2a2d31;
 }
+
+/*@media (max-width: 1100px) {
+  .channel-list {
+    display: none;
+  }
+  .user-list {
+    display: none;
+  }
+  .chat {
+    width: 100%;
+  }
+}*/
 </style>

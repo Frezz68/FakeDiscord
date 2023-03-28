@@ -73,8 +73,11 @@ watchEffect( () => {
         <div class="userName">
           <UserItem :user="user"></UserItem>
         </div>
-        <div class="delete" v-if="userConnected == channelCreator">
+        <div class="delete" v-if="userConnected == channelCreator && user != channelCreator">
           <img src="../assets/poubelle.png" alt="Poubelle" @click="deleteUser(user)">
+        </div>
+        <div class="couronne" v-if="user == channelCreator">
+          <img src="../assets/couronne.png" alt="Poubelle" @click="deleteUser(user)">
         </div>
 
       </li>
@@ -118,16 +121,26 @@ li {
 
 .userName {
   display: inline-block;
-  width: 80%;
+  width: auto;
   vertical-align: top;
 }
 
 .delete {
   display: inline-block;
-  width: 20%;
+  position: absolute;
+  right: 0;
+  width: 35px;
   opacity: 0;
   vertical-align: top;
   transition: opacity 0.3s ease;
+}
+
+.couronne {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  width: 35px;
+  vertical-align: top;
 }
 
 li:hover .delete {

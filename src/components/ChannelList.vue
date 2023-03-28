@@ -3,8 +3,8 @@ import {defineEmits} from "vue";
 import {useRoute} from "vue-router";
 import {useUserStore} from "./../store/users"
 
-const route = useRoute()
 const store = useUserStore()
+
 
 let userConnected = localStorage.getItem("username");
 
@@ -66,6 +66,8 @@ const openPopup = (type,channelId = null) => {
   list-style: none;
   text-align: left;
   padding: 3px;
+  width: 99%;
+  height: auto;
 }
 .left-panel ul a {
   text-decoration: none;
