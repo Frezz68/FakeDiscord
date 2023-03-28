@@ -61,7 +61,7 @@ const getAllChannelUser = async (currentId) => {
   if (filteredChannels.theme != null) {
     store.setTheme(filteredChannels.theme)
   }
-  
+
   for (let user of filteredChannels.users) {
     users.push(user)
   }
@@ -89,8 +89,11 @@ watchEffect(() => {
 
 </script>
 <template>
-  <div class="page"
-    :style="{ color: store.theme.text_color, background: store.theme.primary_color, 'accent-color': store.theme.accent_color}">
+  <div class="page" :style="{
+    color: store.theme.text_color,
+    background: store.theme.primary_color,
+    'accent-color': store.theme.accent_color
+  }">
     <div class="channel-list">
       <ChannelList :channels="channels" @openOrClosePopup="openOrClosePopup"></ChannelList>
     </div>
