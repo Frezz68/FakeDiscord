@@ -116,6 +116,22 @@ const openPopup = (type,channelId = null) => {
   border-radius: 18px;
 }
 
+.moreMessagesButton {
+  margin-left: 45%;
+  width: 140px;
+  padding: 10px;
+  background-color: #5765f2;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.moreMessagesButton:hover {
+  background-color: #4d64b9;
+}
+
 .input .sendImg {
   position: fixed;
   bottom: 0;
