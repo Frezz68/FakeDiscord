@@ -36,6 +36,7 @@ const getAllMessages = async (currentId) => {
   }
 }
 const sendMessage = async () => {
+  if (/^\s*$/.test(promptMsg.value)) return;
   const response = await ServiceMessage.sendMessage(currentId, promptMsg.value);
   if (response.status === 200) {
     promptMsg.value = '';
