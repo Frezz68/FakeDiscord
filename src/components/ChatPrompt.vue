@@ -77,7 +77,6 @@ const openPopup = (type,channelId = null) => {
 <template>
 
     <div class="messages">
-      <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
       <MessageItem v-for="message of messages" :key="messages" :message="message" :channels="props.channels"></MessageItem>
       <!-- Liste des messages -->
     </div>
