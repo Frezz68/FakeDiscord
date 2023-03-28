@@ -3,7 +3,9 @@ import UserItem from './UserItem.vue'
 import {defineEmits, reactive, watchEffect} from 'vue'
 import {useRoute} from "vue-router";
 import {ServiceChannel} from "../service/ServiceChannel";
+import { useUserStore } from "./../store/users"
 
+const store = useUserStore()
 const route = useRoute();
 let currentId;
 let channelCreator = reactive({});
@@ -59,7 +61,11 @@ watchEffect( () => {
 
 </script>
 <template>
-  <div class="right-panel">
+  <div class="right-panel" :style="{
+    color: store.theme.text_color,
+    background: store.theme.primary_color,
+    'accent-color': store.theme.accent_color
+  }">
     <h3>Utilisateurs</h3>
     <button v-if="userConnected == channelCreator" class="button" v-on:click="openPopup">Ajouter un utilisateur</button>
     <ul>
@@ -80,6 +86,7 @@ watchEffect( () => {
 </template>
 
 <style scoped>
+
 h3 {
   text-align: center;
   border-radius: 5px;
@@ -154,7 +161,6 @@ li:hover .delete {
   border-radius: 7px;
   height: 30px;
   font-size: 20px;
-
 }
 
 li:hover {

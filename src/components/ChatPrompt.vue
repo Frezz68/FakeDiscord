@@ -76,8 +76,8 @@ const openPopup = (type,channelId = null) => {
 
 <template>
 
-  <div class="chat">
     <div class="messages">
+      <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
       <MessageItem v-for="message of messages" :key="messages" :message="message" :channels="props.channels"></MessageItem>
       <!-- Liste des messages -->
     </div>
@@ -90,14 +90,13 @@ const openPopup = (type,channelId = null) => {
         <img class="Image" src="../assets/image.png" >
       </button>
     </div>
-  </div>
+      <!--<input type="text" placeholder="Envoyer un message..."> -->
 </template>
 
 <style >
-
 .messages {
   position: absolute;
-  width: 70%;
+  width: 80%;
   height: 95vh;
   overflow-y: auto;
 }

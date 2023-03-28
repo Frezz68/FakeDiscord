@@ -1,15 +1,28 @@
 import { defineStore } from "pinia";
 
-export const useUserStore = defineStore("users",{
+export const useUserStore = defineStore("users", {
     state: () => ({
-        users: []
+        users: [],
+        userIsModerator: false,
+        loginUserName: '',
+        channels: [],
+        theme:{}
     }),
     actions: {
-        getUser : function (id){
-            return this.users.find((e) => e.id === id);
+        moderation: function (isModerator) {
+            this.userIsModerator = isModerator;
+            console.log("addind bool data to store :", isModerator);
         },
-        setUser : function (user){
-            this.users.push(user);
+        setName: function (name) {
+            this.loginUserName = name;
         },
-    }
+        filterChannel: function (currentId, channels) {
+            let filteredChannels = channels.find(channel => channel.id == currentId)
+            if (!filteredChannels) return;
+            return filteredChannels
+        },
+        setTheme: function(setTheme){
+            this.theme = setTheme
+        }
+    },
 })

@@ -13,21 +13,17 @@ export const ServiceChannel = {
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}/user/${userId}`, "DELETE");
     },
     addChannel: async (name, image) => {
-        const data = JSON.stringify({name: name, img: image});
+        const data = JSON.stringify({ name: name, img: image });
         return ServiceXhr.callWithAuth("https://edu.tardigrade.land/msg/protected/channel", data, "PUT");
     },
     deleteChannel: async (id) => {
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${id}`, "DELETE");
     },
-    editChannel: async (id, name, image) => {
-        const data = JSON.stringify({name: name, img: image,
-            theme: {
-                primary_color: "#E91E63",
-                primary_color_dark: "#C2185B",
-                accent_color: "#00BCD4",
-                text_color: "#212121",
-                accent_text_color: "#FFFFFF"
-            }
+    editChannel: async (id, name, image , theme) => {
+        const data = JSON.stringify({
+            name: name,
+            img: image,
+            theme: theme
         });
         return ServiceXhr.callWithAuth(`https://edu.tardigrade.land/msg/protected/channel/${id}/update_metadata`, data, "POST");
     }

@@ -109,13 +109,10 @@ watchEffect( () => {
   <br>
   </div>
 </template>
-
-
-
 <style scoped>
 .message-box {
   position: relative;
-  padding: 10px;
+  padding: 5px;
 }
 
 .authorDate {
@@ -145,9 +142,9 @@ span {
   font-size: 0.6em;
   font-family: cursive;
   text-align: start;
-  display: flex;
+  /* display: flex; */
   vertical-align: bottom;
-  margin-top: auto;
+  /* margin-top: auto; */
 }
 
 .imgMessage {

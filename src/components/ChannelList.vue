@@ -1,7 +1,10 @@
 <script setup>
 import {defineEmits} from "vue";
-import {ServiceChannel} from "../service/ServiceChannel";
-import {useRouter} from "vue-router";
+import {useRoute} from "vue-router";
+import {useUserStore} from "./../store/users"
+
+const store = useUserStore()
+
 
 let userConnected = localStorage.getItem("username");
 
@@ -10,6 +13,7 @@ const props = defineProps({
     type: Object,
   }
 })
+
 
 const emits = defineEmits(['openOrClosePopup'])
 
@@ -20,7 +24,8 @@ const openPopup = (type,channelId = null) => {
 
 </script>
 <template>
-  <div class="left-panel">
+  <div >
+    <div class="left-panel" :style="{color: store.theme.primary_color}">
     <h3>Channels</h3>
     <button class="button" v-on:click="openPopup('addChannel')">Ajouter un channel</button>
     <ul v-for="channel of channels">
@@ -38,6 +43,8 @@ const openPopup = (type,channelId = null) => {
       </div>
     </ul>
   </div>
+  </div>
+
 </template>
 
 <style scoped>
@@ -51,6 +58,7 @@ const openPopup = (type,channelId = null) => {
   margin-bottom: 20px;
   padding: 2px;
   background-color: #303338;
+  
 
 }
 .left-panel ul {
