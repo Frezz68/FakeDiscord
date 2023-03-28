@@ -87,6 +87,11 @@ watchEffect( () => {
 
 <style scoped>
 
+.right-panel {
+  width: 100%;
+  height: 100%;
+}
+
 h3 {
   text-align: center;
   border-radius: 5px;
@@ -130,6 +135,7 @@ li {
   position: absolute;
   right: 0;
   width: 35px;
+  margin-right: 5px;
   opacity: 0;
   vertical-align: top;
   transition: opacity 0.3s ease;
@@ -139,6 +145,7 @@ li {
   display: inline-block;
   position: absolute;
   right: 0;
+  margin-right: 5px;
   width: 35px;
   vertical-align: top;
 }
