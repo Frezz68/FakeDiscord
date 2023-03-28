@@ -5,8 +5,6 @@ export const ServiceChannel = {
         return ServiceXhr.callWithAuthNoBody('https://edu.tardigrade.land/msg/protected/user/channels', "GET");
     },
     addUserToChannel: async (channelId, userId) => {
-        console.log("user", userId)
-        console.log("channel", channelId)
         return ServiceXhr.callWithAuthNoBody(`https://edu.tardigrade.land/msg/protected/channel/${channelId}/user/${userId}`, "PUT");
     },
     removeUserFromChannel: async (channelId, userId) => {

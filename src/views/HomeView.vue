@@ -50,7 +50,6 @@ const initChannel = async () => {
   else if (response.status === 401) {
     localStorage.removeItem('token')
     router.push({ path: '/' })
-    console.log("401 channel")
   }
 }
 

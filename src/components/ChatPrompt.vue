@@ -18,7 +18,6 @@ const props = defineProps({
 
 const changePromptName = (currentId) => {
   let filteredChannels = props.channels.find(channel => channel.id == currentId)
-  console.log(filteredChannels)
   placeholderText.value = 'Envoyer un message dans ' + filteredChannels.name;
 }
 
@@ -68,7 +67,6 @@ watch(() => route.params.id, async (newId) => {
 const emits = defineEmits(['openOrClosePopup'])
 
 const openPopup = (type,channelId = null) => {
-  console.log("openPopup", type, channelId)
   emits('openOrClosePopup',type,channelId,true)
 }
 

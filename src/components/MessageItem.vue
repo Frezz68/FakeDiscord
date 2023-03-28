@@ -41,7 +41,6 @@ const getCreator = (currentId) => {
 }
 
 const editContent = async () => {
-  console.log("editMessage", props.message)
   try {
     let data;
     if (props.message.content.Text && currentId !== null) {
@@ -54,7 +53,6 @@ const editContent = async () => {
         }
       }
     } else {
-      console.log("image")
       data = {
         "channel_id": parseInt(currentId),
         "timestamp": props.message.timestamp,
@@ -64,11 +62,9 @@ const editContent = async () => {
         }
       }
     }
-    console.log("data", data)
     const response = await ServiceMessage.editMessage(currentId, data);
     if (response.status === 200) {
       edit.value = false;
-      console.log("editMessage", response)
     }
     }
   catch

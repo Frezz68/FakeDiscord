@@ -33,7 +33,6 @@ const getCreator = (currentId) => {
 }
 
 const deleteUser = async (user) => {
-  console.log("deleteUser", user)
   if (user !== null && currentId !== null) {
     try {
       const response = await ServiceChannel.removeUserFromChannel(currentId, user);
@@ -53,7 +52,6 @@ const openPopup = () => {
 watchEffect( () => {
   if(!route.params.id) return;
   currentId = route.params.id;
-  console.log("currentId", currentId)
   getCreator(currentId);
 })
 

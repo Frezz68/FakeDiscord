@@ -18,7 +18,6 @@ const props = defineProps({
 const emits = defineEmits(['openOrClosePopup'])
 
 const openPopup = (type,channelId = null) => {
-  console.log("openPopup", type, channelId)
   emits('openOrClosePopup',type,channelId,true)
 }
 
