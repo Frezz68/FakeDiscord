@@ -57,10 +57,25 @@
       </div>
     </div>
   </div>
+
+  <div class="vue-modal" v-else-if="type == 'sendImage'">
+    <div class="vue-modal-inner">
+      <div class="vue-modal-content">
+        <h2>Envoyer une image</h2>
+        <div class="add-user-box">
+          <label for="image">URL de l'image </label>
+          <input v-model="image" type="text" id="image" required><br>
+        </div>
+        <button class="button" type="button" @click="SendImage">Envoyer</button>
+        <button class="button" @click="closePopup">Annuler</button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import {ServiceChannel} from "../service/ServiceChannel";
+import {ServiceMessage} from "@/service/ServiceMessage";
 import {useRoute} from "vue-router";
 import {defineEmits, ref} from "vue";
 
@@ -142,7 +157,7 @@ const deleteChannel = () => {
 }
 const editChannel = () => {
   console.log("editChannel", props.channelId)
-  if (props.channelId !== "") {
+  if (props.channelId !== "" && name.value !== "" && image.value !== "") {
     ServiceChannel.editChannel(props.channelId,name.value,image.value)
       .then(async (response) => {
         console.log(response)
@@ -150,6 +165,22 @@ const editChannel = () => {
         if (response.status === 200) {
           closePopup();
           refresh();
+        } else {
+          this.error = result.message;
+        }
+      });
+  }
+}
+
+const SendImage = () => {
+  console.log("SendImage", props.channelId)
+  if (props.channelId !== "" && image.value !== "") {
+    ServiceMessage.sendImage(props.channelId,image.value)
+      .then(async (response) => {
+        console.log(response)
+        const result = await response.json();
+        if (response.status === 200) {
+          closePopup();
         } else {
           this.error = result.message;
         }
