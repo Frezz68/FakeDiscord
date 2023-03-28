@@ -68,25 +68,19 @@ watch(() => route.params.id, async (newId) => {
 
 <template>
 
-  <div class="chat">
     <div class="messages">
       <MessageItem v-for="message of messages" :key="messages" :message="message"></MessageItem>
-      <!-- Liste des messages -->
-    </div>
-    <div class="input">
-      <!--<input type="text" placeholder="Envoyer un message..."> -->
       <form @submit.prevent="sendMessage()">
       <input type="text" id="prompt" name="Text" :placeholder="placeholderText" v-model="promptMsg" >
       </form>
+      <!-- Liste des messages -->
     </div>
-  </div>
+      <!--<input type="text" placeholder="Envoyer un message..."> -->
 </template>
-
 <style >
-
 .messages {
   position: absolute;
-  width: 70%;
+  width: 80%;
   height: 95vh;
   overflow-y: auto;
 }
@@ -94,16 +88,9 @@ watch(() => route.params.id, async (newId) => {
 #prompt {
   position: fixed;
   bottom: 0;
-  margin-left: 1%;
-  width: 66%;
+  width: 77%;
   padding: 1em;
   border-radius: 18px;
 }
 
-
-@media (max-width: 1100px) {
-  #prompt {
-    width: 95%;
-  }
-}
 </style>

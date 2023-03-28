@@ -106,19 +106,14 @@ watchEffect(() => {
     </div>
   </div>
 </template>
-
-
-
 <style scoped>
 .page {
-  width: 100vw;
+  display: flex;
   height: 100vh;
 }
 
 .channel-list {
-  display: inline-block;
-  width: 15%;
-  height: 100vh;
+  width: 10%;
   vertical-align: top;
   box-shadow: 1px 0 5px 1px #252525;
   border-radius: 5px;
@@ -126,33 +121,18 @@ watchEffect(() => {
 }
 
 .chat {
-  display: inline-block;
-  width: 70%;
+  display: flex;
+  width: 80%;
   vertical-align: top;
-  height: 100vh;
 }
 
 .user-list {
-  display: inline-block;
-  width: 15%;
-  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  width: 10%;
   vertical-align: top;
   box-shadow: 1px 0 5px 1px #252525;
   border-radius: 5px;
   background-color: #2a2d31;
-}
-
-@media (max-width: 1100px) {
-  .channel-list {
-    display: none;
-  }
-
-  .user-list {
-    display: none;
-  }
-
-  .chat {
-    width: 100%;
-  }
 }
 </style>

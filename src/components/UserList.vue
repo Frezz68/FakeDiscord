@@ -77,6 +77,7 @@ watchEffect( () => {
 </template>
 
 <style scoped>
+
 h3 {
   text-align: center;
   border-radius: 5px;
@@ -141,7 +142,6 @@ li:hover .delete {
   border-radius: 7px;
   height: 30px;
   font-size: 20px;
-
 }
 
 li:hover {
