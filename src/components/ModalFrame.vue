@@ -138,7 +138,6 @@ const addChannel = async () => {
   if (name.value !== "" && image.value !== "") {
     ServiceChannel.addChannel(name.value, image.value)
       .then(async (response) => {
-        console.log(response)
         const result = await response.json();
         if (response.status === 200) {
           closePopup();
@@ -153,7 +152,6 @@ const deleteChannel = () => {
   if (props.channelId !== "") {
     ServiceChannel.deleteChannel(props.channelId)
       .then(async (response) => {
-        console.log(response)
         const result = await response.json();
         if (response.status === 200) {
           closePopup();
@@ -168,7 +166,6 @@ const editChannel = () => {
   if (props.channelId !== "" && name.value !== "" && image.value !== "") {
     ServiceChannel.editChannel(props.channelId,name.value,image.value,themeList[selectValue.value])
       .then(async (response) => {
-        console.log(response)
         const result = await response.json();
         if (response.status === 200) {
           closePopup();
@@ -184,7 +181,6 @@ const SendImage = () => {
   if (props.channelId !== "" && image.value !== "") {
     ServiceMessage.sendImage(props.channelId,image.value)
       .then(async (response) => {
-        console.log(response)
         const result = await response.json();
         if (response.status === 200) {
           closePopup();
