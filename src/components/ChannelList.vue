@@ -1,23 +1,11 @@
 <script setup>
 import {defineEmits} from "vue";
-import {ServiceChannel} from "../service/ServiceChannel";
-import {useRouter} from "vue-router";
+import {useRoute} from "vue-router";
+import {useUserStore} from "./../store/users"
+
+const store = useUserStore()
 
 
-/*let channels = reactive([])
-const initChannel = async () => {
-  const response = await ServiceChannel.getAllChannel()
-  const result = await response.json();
-  if (response.status === 200) {
-    for (let channel of result){
-      channels.push(channel)
-    }
-    console.log(channels)
-  }
-}
-
-initChannel();
-*/
 let userConnected = localStorage.getItem("username");
 
 const props = defineProps({
@@ -26,16 +14,17 @@ const props = defineProps({
   }
 })
 
+
 const emits = defineEmits(['openOrClosePopup'])
 
 const openPopup = (type,channelId = null) => {
-  console.log("openPopup", type, channelId)
   emits('openOrClosePopup',type,channelId,true)
 }
 
 </script>
 <template>
-  <div class="left-panel">
+  <div >
+    <div class="left-panel" :style="{color: store.theme.primary_color}">
     <h3>Channels</h3>
     <button class="button" v-on:click="openPopup('addChannel')">Ajouter un channel</button>
     <ul v-for="channel of channels">
@@ -45,24 +34,20 @@ const openPopup = (type,channelId = null) => {
           {{ channel.name }}
         </li>
       </RouterLink>
-      <div class="delete" v-if="userConnected === channel.creator">
-        <img src="../assets/poubelle.png" alt="Poubelle" class="imgPoubelle" v-on:click="openPopup('deleteChannel',channel.id)">
+      <div class="channelManager" v-if="userConnected === channel.creator">
+        <img src="../assets/bouton-modifier.png" alt="modifier" class="imgManager" v-on:click="openPopup('editChannel',channel.id)">
+      </div>
+      <div class="channelManager" v-if="userConnected === channel.creator">
+        <img src="../assets/poubelle.png" alt="Poubelle" class="imgManager" v-on:click="openPopup('deleteChannel',channel.id)">
       </div>
     </ul>
   </div>
+  </div>
+
 </template>
 
 <style scoped>
-.left-panel {
-  position: fixed;
-  flex-basis: 150px;
-  flex-direction: column;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  min-width: 150px;
-  background-color: #2a2d31;
-}
+
 .left-panel h3 {
   text-align: center;
   border-radius: 5px;
@@ -72,6 +57,7 @@ const openPopup = (type,channelId = null) => {
   margin-bottom: 20px;
   padding: 2px;
   background-color: #303338;
+  
 
 }
 .left-panel ul {
@@ -79,6 +65,8 @@ const openPopup = (type,channelId = null) => {
   list-style: none;
   text-align: left;
   padding: 3px;
+  width: 99%;
+  height: auto;
 }
 .left-panel ul a {
   text-decoration: none;
@@ -100,7 +88,7 @@ const openPopup = (type,channelId = null) => {
   height: 15px;
 }
 
-.left-panel ul .delete .imgPoubelle {
+.left-panel ul .channelManager .imgManager {
   height: 25px;
   width: 25px;
   right: 5px;
@@ -115,7 +103,7 @@ li:hover {
   background-color: #303338;
 }
 
-.left-panel ul .delete {
+.left-panel ul .channelManager {
   display: inline-block;
   width: 20%;
   opacity: 0;
@@ -123,7 +111,7 @@ li:hover {
   transition: opacity 0.3s ease;
 }
 
-ul:hover .delete {
+ul:hover .channelManager {
   opacity: 1;
 }
 

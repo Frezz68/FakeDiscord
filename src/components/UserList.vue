@@ -3,7 +3,9 @@ import UserItem from './UserItem.vue'
 import {defineEmits, reactive, watchEffect} from 'vue'
 import {useRoute} from "vue-router";
 import {ServiceChannel} from "../service/ServiceChannel";
+import { useUserStore } from "./../store/users"
 
+const store = useUserStore()
 const route = useRoute();
 let currentId;
 let channelCreator = reactive({});
@@ -31,7 +33,6 @@ const getCreator = (currentId) => {
 }
 
 const deleteUser = async (user) => {
-  console.log("deleteUser", user)
   if (user !== null && currentId !== null) {
     try {
       const response = await ServiceChannel.removeUserFromChannel(currentId, user);
@@ -51,7 +52,6 @@ const openPopup = () => {
 watchEffect( () => {
   if(!route.params.id) return;
   currentId = route.params.id;
-  console.log("currentId", currentId)
   getCreator(currentId);
 })
 
@@ -59,7 +59,11 @@ watchEffect( () => {
 
 </script>
 <template>
-  <div class="right-panel">
+  <div class="right-panel" :style="{
+    color: store.theme.text_color,
+    background: store.theme.primary_color,
+    'accent-color': store.theme.accent_color
+  }">
     <h3>Utilisateurs</h3>
     <button v-if="userConnected == channelCreator" class="button" v-on:click="openPopup">Ajouter un utilisateur</button>
     <ul>
@@ -67,8 +71,11 @@ watchEffect( () => {
         <div class="userName">
           <UserItem :user="user"></UserItem>
         </div>
-        <div class="delete" v-if="userConnected == channelCreator">
+        <div class="delete" v-if="userConnected == channelCreator && user != channelCreator">
           <img src="../assets/poubelle.png" alt="Poubelle" @click="deleteUser(user)">
+        </div>
+        <div class="couronne" v-if="user == channelCreator">
+          <img src="../assets/couronne.png" alt="Poubelle" @click="deleteUser(user)">
         </div>
 
       </li>
@@ -77,17 +84,13 @@ watchEffect( () => {
 </template>
 
 <style scoped>
+
 .right-panel {
-  position: fixed;
-  flex-basis: 150px;
-  flex-direction: column;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 180px;
-  background-color: #2a2d31;
+  width: 100%;
+  height: 100%;
 }
-.right-panel h3 {
+
+h3 {
   text-align: center;
   border-radius: 5px;
   box-shadow: 1px 0 5px 1px #252525;
@@ -121,16 +124,28 @@ li {
 
 .userName {
   display: inline-block;
-  width: 80%;
+  width: auto;
   vertical-align: top;
 }
 
 .delete {
   display: inline-block;
-  width: 20%;
+  position: absolute;
+  right: 0;
+  width: 35px;
+  margin-right: 5px;
   opacity: 0;
   vertical-align: top;
   transition: opacity 0.3s ease;
+}
+
+.couronne {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  margin-right: 5px;
+  width: 35px;
+  vertical-align: top;
 }
 
 li:hover .delete {
@@ -151,7 +166,6 @@ li:hover .delete {
   border-radius: 7px;
   height: 30px;
   font-size: 20px;
-
 }
 
 li:hover {
